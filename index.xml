@@ -7,9 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 23 May 2020 20:50:19 +0800</lastBuildDate>
     
 	<atom:link href="https://stevenferrer.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>About</title>
+      <link>https://stevenferrer.github.io/about/</link>
+      <pubDate>Sat, 23 May 2020 20:50:19 +0800</pubDate>
+      
+      <guid>https://stevenferrer.github.io/about/</guid>
+      <description>This is an about page</description>
+    </item>
+    
+    <item>
+      <title>My First Post</title>
+      <link>https://stevenferrer.github.io/posts/my-first-post/</link>
+      <pubDate>Sat, 23 May 2020 20:23:44 +0800</pubDate>
+      
+      <guid>https://stevenferrer.github.io/posts/my-first-post/</guid>
+      <description>This is a sample post.</description>
+    </item>
     
   </channel>
 </rss>
