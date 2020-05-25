@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>stevenferrer&#39;s blog</title>
+    <title>steven ferrer</title>
     <link>https://stevenferrer.github.io/</link>
-    <description>Recent content on stevenferrer&#39;s blog</description>
+    <description>Recent content on steven ferrer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright notice</copyright>
@@ -13,12 +13,12 @@
     
     
     <item>
-      <title>About</title>
+      <title>About Me</title>
       <link>https://stevenferrer.github.io/about/</link>
       <pubDate>Sat, 23 May 2020 20:50:19 +0800</pubDate>
       
       <guid>https://stevenferrer.github.io/about/</guid>
-      <description>This is an about page</description>
+      <description>Hi! I&amp;rsquo;m Steven, a software engineer living in Philippines. I mostly write software in Go but I play around with other programming languages for fun.</description>
     </item>
     
     <item>
