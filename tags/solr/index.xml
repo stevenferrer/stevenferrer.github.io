@@ -13,12 +13,12 @@
     
     
     <item>
-      <title>Implementing Multi-Select Facet with Solr</title>
-      <link>https://stevenferrer.github.io/posts/implementing-multi-select-facet/</link>
+      <title>Multi-Select Facet with Solr, Vue and Go</title>
+      <link>https://stevenferrer.github.io/posts/multi-select-facet/</link>
       <pubDate>Fri, 12 Jun 2020 21:38:51 +0800</pubDate>
       
-      <guid>https://stevenferrer.github.io/posts/implementing-multi-select-facet/</guid>
-      <description>Introduction In this post, we&amp;rsquo;re going to implement a multi-select facet. A multi-select facet is a component which majority to e-commerce sites supports.</description>
+      <guid>https://stevenferrer.github.io/posts/multi-select-facet/</guid>
+      <description>Introduction A multi-select facet feature give the users the ability to quickly filter the product catalog and help them zero-in on the product that they need.</description>
     </item>
     
   </channel>

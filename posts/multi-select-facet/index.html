@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Multi-Select Facet with Solr, Vue and Go - Steven Ferrer</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Multi-Select Facet with Solr, Vue and Go" />
+<meta property="og:description" content="Implementing multi-select facet with Solr, Vue and Go" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://stevenferrer.github.io/posts/multi-select-facet/" />
+<meta property="article:published_time" content="2020-06-12T21:38:51+08:00" />
+<meta property="article:modified_time" content="2020-06-12T21:38:51+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Multi-Select Facet with Solr, Vue and Go"/>
+<meta name="twitter:description" content="Implementing multi-select facet with Solr, Vue and Go"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://stevenferrer.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://stevenferrer.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://stevenferrer.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://stevenferrer.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="https://stevenferrer.github.io/">Steven Ferrer</a></h1>
+	<div class="site-description"><h2>“It&rsquo;s not about the cards you&rsquo;re dealt, but how you play the hand.” ― Randy Pausch</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/stevenferrer" title="Github"><i data-feather="github"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">home</a>
+			</li>
+			
+			<li>
+				<a href="/posts">all posts</a>
+			</li>
+			
+			<li>
+				<a href="/about">about</a>
+			</li>
+			
+			<li>
+				<a href="/tags">tags</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">Multi-Select Facet with Solr, Vue and Go</h1>
+			<div class="meta">Posted at &mdash; Jun 12, 2020 <span class="draft-label">DRAFT</span> </div>
+		</div>
+
+		<div class="markdown">
+			<p><img src="/images/multi-select-facet-amz.png" alt="multi-select facet amz"></p>
+<h1 id="introduction">Introduction</h1>
+<p>A <em>multi-select facet</em> feature give the users the ability to quickly filter the product catalog and help them zero-in on the product that they need. The majority of e-commerces websites support this feature and if you have shopped online before, then you had probably used it before.</p>
+<p>I needed to support exactly the same feature for one my project but I didn&rsquo;t know where to start. I didn&rsquo;t even know what this feature was called. I scoured the internet until, luckily, I found this amazing <a href="https://blog.griddynamics.com/multi-select-faceting-for-nested-documents-in-solr/">blog post</a>. It&rsquo;s a very detailed explanation of how to implement a multi-select facet query in <a href="https://lucene.apache.org/solr/">Solr</a>.</p>
+<p>In this blog post, we&rsquo;re going to take it further and implement a <a href="https://en.wikipedia.org/wiki/Web_API">web API</a> and a <a href="https://en.wikipedia.org/wiki/Single-page_application">single-page application</a>.</p>
+<h1 id="indexing-and-querying">Indexing and querying</h1>
+<h2 id="the-data">The data</h2>
+<p>We&rsquo;re going to use <em>smartphones</em> and <em>e-readers</em> as our product data since they both have similar attributes. Each record will have a set of <a href="https://en.wikipedia.org/wiki/Stock_keeping_unit"><code>SKUs</code></a>. For example, the first record in our data contains a <em>Apple iPhone 11 Pro Max</em> which has <code>2 variants</code>. The first one has a <em>color</em> of <em>Black</em> with <em>storage capacity</em> of <em>256G</em> and the other one has a <em>color</em> of <em>Space Grey</em> with a <em>storage capacity</em> of <em>64GB</em>.</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
+  {
+    <span style="color:#268bd2">&#34;id&#34;</span>: <span style="color:#2aa198">&#34;1&#34;</span>,
+    <span style="color:#268bd2">&#34;name&#34;</span>: <span style="color:#2aa198">&#34;Apple iPhone 11 Pro Max&#34;</span>,
+    <span style="color:#268bd2">&#34;brand&#34;</span>: <span style="color:#2aa198">&#34;Apple&#34;</span>,
+    <span style="color:#268bd2">&#34;category&#34;</span>: <span style="color:#2aa198">&#34;Electronic Devices&#34;</span>,
+    <span style="color:#268bd2">&#34;productType&#34;</span>: <span style="color:#2aa198">&#34;Smartphones&#34;</span>,
+    <span style="color:#268bd2">&#34;docType&#34;</span>: <span style="color:#2aa198">&#34;product&#34;</span>,
+    <span style="color:#268bd2">&#34;skus&#34;</span>: [
+      {
+        <span style="color:#268bd2">&#34;id&#34;</span>: <span style="color:#2aa198">&#34;10&#34;</span>,
+        <span style="color:#268bd2">&#34;docType&#34;</span>: <span style="color:#2aa198">&#34;sku&#34;</span>,
+        <span style="color:#268bd2">&#34;colorFamily_s&#34;</span>: <span style="color:#2aa198">&#34;Black&#34;</span>,
+        <span style="color:#268bd2">&#34;operatingSystem_s&#34;</span>: <span style="color:#2aa198">&#34;iOS&#34;</span>,
+        <span style="color:#268bd2">&#34;storageCapacity_s&#34;</span>: <span style="color:#2aa198">&#34;256GB&#34;</span>
+      },
+      {
+        <span style="color:#268bd2">&#34;id&#34;</span>: <span style="color:#2aa198">&#34;11&#34;</span>,
+        <span style="color:#268bd2">&#34;docType&#34;</span>: <span style="color:#2aa198">&#34;sku&#34;</span>,
+        <span style="color:#268bd2">&#34;colorFamily_s&#34;</span>: <span style="color:#2aa198">&#34;Space Grey&#34;</span>,
+        <span style="color:#268bd2">&#34;operatingSystem_s&#34;</span>: <span style="color:#2aa198">&#34;iOS&#34;</span>,
+        <span style="color:#268bd2">&#34;storageCapacity_s&#34;</span>: <span style="color:#2aa198">&#34;64GB&#34;</span>
+      }
+    ]
+  }
+  ...
+]
+</code></pre></div><h2 id="defining-our-schema">Defining our schema</h2>
+<p>From the above, we have the following list of fields.</p>
+<ul>
+<li>name - e.g. <em>Apple iPhone 11 Pro Max</em></li>
+<li>brand - e.g. <em>Apple</em></li>
+<li>category e.g. <em>Electronic Devices</em></li>
+<li>productType e.g. <em>Smartphones</em>, <em>E-readers</em></li>
+<li>docType - indicates the document type e.g. <em>product</em>, <em>sku</em>. The use of this field will become more apparent in the next sections.</li>
+</ul>
+<p>You may be asking, <em>Why are we only defining those fields?</em> Great question.</p>
+<p>The sku fields <em>colorFamily_s</em>, <em>operatingSystem_s</em>, <em>storageCapacity_s</em> are <a href="https://lucene.apache.org/solr/guide/8_5/dynamic-fields.html">dynamic</a> which means, Solr can infer the type of the field based on its suffix (<strong>_s</strong>). This is really handy when you&rsquo;re dealing with data that might have dynamic attributes like an <code>sku</code>.  Also, the <code>skus</code> do not need to be defined in the schema. More details on <a href="https://lucene.apache.org/solr/guide/8_5/indexing-nested-documents.html#json-examples">nested child documents</a>.</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#719e07">...</span>
+fields <span style="color:#719e07">:=</span> []solrschema.Field{
+  {
+    Name:    <span style="color:#2aa198">&#34;name&#34;</span>,
+    Type:    <span style="color:#2aa198">&#34;text_general&#34;</span>,
+    Indexed: <span style="color:#cb4b16">true</span>,
+    Stored:  <span style="color:#cb4b16">true</span>,
+  },
+  {
+    Name:    <span style="color:#2aa198">&#34;category&#34;</span>,
+    Type:    <span style="color:#2aa198">&#34;text_gen_sort&#34;</span>,
+    Indexed: <span style="color:#cb4b16">true</span>,
+    Stored:  <span style="color:#cb4b16">true</span>,
+  },
+  {
+    Name:    <span style="color:#2aa198">&#34;brand&#34;</span>,
+    Type:    <span style="color:#2aa198">&#34;text_gen_sort&#34;</span>,
+    Indexed: <span style="color:#cb4b16">true</span>,
+    Stored:  <span style="color:#cb4b16">true</span>,
+  },
+  {
+    Name:    <span style="color:#2aa198">&#34;productType&#34;</span>,
+    Type:    <span style="color:#2aa198">&#34;string&#34;</span>,
+    Indexed: <span style="color:#cb4b16">true</span>,
+    Stored:  <span style="color:#cb4b16">true</span>,
+  },
+  {
+    Name:    <span style="color:#2aa198">&#34;docType&#34;</span>,
+    Type:    <span style="color:#2aa198">&#34;string&#34;</span>,
+    Indexed: <span style="color:#cb4b16">true</span>,
+    Stored:  <span style="color:#cb4b16">true</span>,
+  },
+}
+
+<span style="color:#719e07">for</span> _, field <span style="color:#719e07">:=</span> <span style="color:#719e07">range</span> fields {
+  err <span style="color:#719e07">:=</span> schemaClient.<span style="color:#268bd2">AddField</span>(ctx, collection, field)
+  <span style="color:#719e07">...</span>
+}
+<span style="color:#719e07">...</span>
+</code></pre></div><h2 id="indexing-the-data">Indexing the data</h2>
+<p>Indexing is pretty straightforward, just open the data file and feed it to <em>Solr</em> and commit. That&rsquo;s it!</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	b, err <span style="color:#719e07">:=</span> ioutil.<span style="color:#268bd2">ReadFile</span>(dataPath)
+	<span style="color:#719e07">...</span>
+
+	<span style="color:#268bd2">var</span> docs []Map
+	err = json.<span style="color:#268bd2">Unmarshal</span>(b, <span style="color:#719e07">&amp;</span>docs)
+	<span style="color:#719e07">...</span>
+
+	err = indexClient.<span style="color:#268bd2">AddDocs</span>(ctx, collection, docs)
+	<span style="color:#719e07">...</span>
+
+	<span style="color:#586e75">// commit
+</span><span style="color:#586e75"></span>	err = indexClient.<span style="color:#268bd2">Commit</span>(ctx, collection)
+	<span style="color:#719e07">...</span>
+
+</code></pre></div><p>Now, we should be able to see that we have sucessfully indexed our data. Notice the <code>fq</code> param is set to <code>docType:product</code>. This will filter all the non-product documents.</p>
+<p><img src="/images/products-query-admin-ui.png" alt="smartphones query from admin ui"></p>
+<p><em>But, where are the product <code>skus</code>?</em> Another great question.</p>
+<p><a href="https://lucene.apache.org/solr/guide/8_5/indexing-nested-documents.html">Nested child documents</a> are indexed like a regular document. Internally, Solr knows which <em>sku</em> documents are related to which <em>products</em>.</p>
+<p>To help us identify which document is a <em>product</em> or <em>sku</em>, we are using the <em>docType</em> field. This is the suggested way to handle <em>nested child documents</em> in <em>Solr</em>.</p>
+<p><img src="/images/products-query-admin-ui-skus-and-products.png" alt="products query from admin ui - skus and products"></p>
+<p>We can include the <em>skus</em> to the <em>product</em> by specifying the value <code>[child]</code> for <code>fl</code> parameter.</p>
+<p><img src="/images/products-query-admin-ui-with-skus.png" alt="smartphones query from admin ui with skus"></p>
+<h3 id="query-with-facet">Query with facet</h3>
+<p>The query in this example is heavily inspired the <a href="https://blog.griddynamics.com/multi-select-faceting-for-nested-documents-in-solr/">blog post</a> mentioned earlier. I suggest reading it thoroughly before proceeding to the next section.</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#268bd2">&#34;query&#34;</span>: <span style="color:#2aa198">&#34;{!parent tag=top filters=$skuFilters which=docType:product v=docType:sku}&#34;</span>,
+  <span style="color:#268bd2">&#34;queries&#34;</span>: {
+    <span style="color:#268bd2">&#34;skuFilters&#34;</span>: [<span style="color:#2aa198">&#34;{!tag=colorFamily_s}colorFamily_s:Black&#34;</span>]
+  },
+  <span style="color:#268bd2">&#34;filter&#34;</span>: [<span style="color:#2aa198">&#34;{!tag=top}brand:Amazon&#34;</span>],
+  <span style="color:#268bd2">&#34;facet&#34;</span>: {
+    <span style="color:#268bd2">&#34;Brand&#34;</span>: {
+      <span style="color:#268bd2">&#34;facet&#34;</span>: { <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">&#34;uniqueBlock(_root_)&#34;</span> },
+      <span style="color:#268bd2">&#34;field&#34;</span>: <span style="color:#2aa198">&#34;brand&#34;</span>,
+      <span style="color:#268bd2">&#34;limit&#34;</span>: <span style="color:#2aa198">-1</span>,
+      <span style="color:#268bd2">&#34;type&#34;</span>: <span style="color:#2aa198">&#34;terms&#34;</span>
+    },
+    <span style="color:#268bd2">&#34;Color Family&#34;</span>: {
+      <span style="color:#268bd2">&#34;domain&#34;</span>: {
+        <span style="color:#268bd2">&#34;excludeTags&#34;</span>: <span style="color:#2aa198">&#34;top&#34;</span>,
+        <span style="color:#268bd2">&#34;filter&#34;</span>: [
+          <span style="color:#2aa198">&#34;{!filters param=$skuFilters excludeTags=colorFamily_s v=$sku}&#34;</span>,
+          <span style="color:#2aa198">&#34;{!child of=docType:product filters=$filter v=docType:product}&#34;</span>
+        ]
+      },
+      <span style="color:#268bd2">&#34;facet&#34;</span>: { <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">&#34;uniqueBlock(_root_)&#34;</span> },
+      <span style="color:#268bd2">&#34;field&#34;</span>: <span style="color:#2aa198">&#34;colorFamily_s&#34;</span>,
+      <span style="color:#268bd2">&#34;limit&#34;</span>: <span style="color:#2aa198">-1</span>,
+      <span style="color:#268bd2">&#34;type&#34;</span>: <span style="color:#2aa198">&#34;terms&#34;</span>
+    }
+  }
+}
+
+</code></pre></div><p>Let&rsquo;s break it down a little bit so that we can have a better understanding each part of the query.</p>
+<p>Here, we&rsquo;re using <a href="https://lucene.apache.org/solr/guide/8_5/other-parsers.html#block-join-parent-query-parser">block join parent query parser</a>. This parser takes a query value (<code>v=docType:sku</code>) and filter (<code>filters:$skuFilters</code>) that matches the child documents (<code>skus</code>) and returns their parents (<code>which=docType:product</code>).</p>
+<p>Note the <code>$</code> (dollar symbol) in the <code>filters:$skuFilters</code>. We use this syntax to reference other values in query body.</p>
+<p>Also, we&rsquo;re specifying <code>tag:top</code> which will be useful when we want to exclude the <em>product filters</em> in the child facet settings. More details on <a href="https://lucene.apache.org/solr/guide/8_5/faceting.html#tagging-and-excluding-filters"><code>tagging and excluding filters</code></a>.</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#268bd2">&#34;query&#34;</span>: <span style="color:#2aa198">&#34;{!parent tag=top filters=$skuFilters which=docType:product v=docType:sku}&#34;</span>,
+  <span style="color:#268bd2">&#34;queries&#34;</span>: {
+    <span style="color:#268bd2">&#34;skuFilters&#34;</span>: [<span style="color:#2aa198">&#34;{!tag=colorFamily_s}colorFamily_s:Black&#34;</span>]
+  },
+  <span style="color:#268bd2">&#34;filter&#34;</span>: [<span style="color:#2aa198">&#34;{!tag=top}brand:Amazon&#34;</span>],
+  ...
+}
+</code></pre></div><p>Next,  we&rsquo;re specifying a <a href="https://lucene.apache.org/solr/guide/8_5/json-facet-api.html#terms-facet">terms facet</a>. This will produce a list of values based on the field <code>colorFamily_s</code> which will only be applied to <em>sku</em> documents. We&rsquo;re excluding the <em>top</em> filter so it doesn&rsquo;t get applied to this facet setting. We&rsquo;ve also included the <code>&quot;productCount&quot;: &quot;uniqueBlock(_root_)&quot;</code> to count the <em>unique products</em> that matches the child <em>skus</em>.</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  ...
+  <span style="color:#268bd2">&#34;facet&#34;</span>: {
+    ...
+    <span style="color:#268bd2">&#34;Color Family&#34;</span>: {
+      <span style="color:#268bd2">&#34;field&#34;</span>: <span style="color:#2aa198">&#34;colorFamily_s&#34;</span>,
+      <span style="color:#268bd2">&#34;type&#34;</span>: <span style="color:#2aa198">&#34;terms&#34;</span>,
+      <span style="color:#268bd2">&#34;limit&#34;</span>: <span style="color:#2aa198">-1</span>,
+      <span style="color:#268bd2">&#34;facet&#34;</span>: {
+        <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">&#34;uniqueBlock(_root_)&#34;</span>
+      },
+      <span style="color:#268bd2">&#34;domain&#34;</span>: {
+        <span style="color:#268bd2">&#34;excludeTags&#34;</span>: <span style="color:#2aa198">&#34;top&#34;</span>,
+        <span style="color:#268bd2">&#34;filter&#34;</span>: [
+          <span style="color:#2aa198">&#34;{!filters param=$skuFilters excludeTags=colorFamily_s v=docType:sku}&#34;</span>,
+          <span style="color:#2aa198">&#34;{!child of=docType:product filters=$filter v=docType:product}&#34;</span>
+        ]
+      }
+    }
+  }
+}
+</code></pre></div><p>The next facet setting is very similar to above, but is a lot simplier, as it is only applied to top level documents (<em>products</em>).</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  ...
+  <span style="color:#268bd2">&#34;facet&#34;</span>: {
+    <span style="color:#268bd2">&#34;Brand&#34;</span>: {
+      <span style="color:#268bd2">&#34;field&#34;</span>: <span style="color:#2aa198">&#34;brand&#34;</span>,
+      <span style="color:#268bd2">&#34;limit&#34;</span>: <span style="color:#2aa198">-1</span>,
+      <span style="color:#268bd2">&#34;type&#34;</span>: <span style="color:#2aa198">&#34;terms&#34;</span>,
+      <span style="color:#268bd2">&#34;facet&#34;</span>: {
+        <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">&#34;uniqueBlock(_root_)&#34;</span>
+      }
+    }
+    ...
+  }
+}
+</code></pre></div><p>Let&rsquo;s test our query and see the results.</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#268bd2">&#34;Brand&#34;</span>: {
+    <span style="color:#268bd2">&#34;buckets&#34;</span>: [
+      {
+        <span style="color:#268bd2">&#34;val&#34;</span>: <span style="color:#2aa198">&#34;Amazon&#34;</span>,
+        <span style="color:#268bd2">&#34;count&#34;</span>: <span style="color:#2aa198">1</span>,
+        <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">1</span>
+      }
+    ]
+  },
+  <span style="color:#268bd2">&#34;Color Family&#34;</span>: {
+    <span style="color:#268bd2">&#34;buckets&#34;</span>: [
+      {
+        <span style="color:#268bd2">&#34;val&#34;</span>: <span style="color:#2aa198">&#34;Black&#34;</span>,
+        <span style="color:#268bd2">&#34;count&#34;</span>: <span style="color:#2aa198">6</span>,
+        <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">5</span>
+      },
+      {
+        <span style="color:#268bd2">&#34;val&#34;</span>: <span style="color:#2aa198">&#34;Space Grey&#34;</span>,
+        <span style="color:#268bd2">&#34;count&#34;</span>: <span style="color:#2aa198">2</span>,
+        <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">2</span>
+      },
+      {
+        <span style="color:#268bd2">&#34;val&#34;</span>: <span style="color:#2aa198">&#34;Blue&#34;</span>,
+        <span style="color:#268bd2">&#34;count&#34;</span>: <span style="color:#2aa198">1</span>,
+        <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">1</span>
+      },
+      ...
+    ]
+  }
+}
+</code></pre></div><p>For each bucket, we can see that we have the <code>val</code> which is unique value for the field, <code>count</code> which indicates the number of <code>skus</code> that matched, and the <code>productCount</code> which indicates the number of <em>unique</em> products that matched (i.e. Assume that <code>2 skus</code> matched the query but they both belong to the same parent product, thus <code>productCount</code> is <code>1</code>).</p>
+<h1 id="implementing-the-web-api">Implementing the web API</h1>
+<p>We will be using <a href="https://go.dev/">Go</a> to implement our web API.</p>
+<h1 id="implementing-the-single-page-application">Implementing the single-page application</h1>
+<p>Blah, blah, blah.</p>
+<h1 id="putting-it-all-together">Putting it all together</h1>
+<p>Blah, blah, blah.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Blah, blah, blah.</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/solr">solr</a></li>
+								
+								<li><a href="/tags/go">go</a></li>
+								
+								<li><a href="/tags/vue">vue</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright 2020 |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script>feather.replace()</script>
+</body>
+</html>
