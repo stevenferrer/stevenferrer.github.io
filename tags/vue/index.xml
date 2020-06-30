@@ -18,7 +18,7 @@
       <pubDate>Tue, 30 Jun 2020 16:59:01 +0800</pubDate>
       
       <guid>https://stevenferrer.github.io/posts/multi-select-facet/</guid>
-      <description>Introduction A multi-select facet feature give the users the ability to quickly filter the product catalog and help them zero-in on the product that they need.</description>
+      <description>Contents  Contents Introduction Indexing and querying  The data Defining our schema Indexing the data Query with facet   API Implementation Front-end implementation Conclusion References  Introduction A multi-select facet feature give the users the ability to quickly filter the product catalog and help them zero-in on the product that they need.</description>
     </item>
     
   </channel>
