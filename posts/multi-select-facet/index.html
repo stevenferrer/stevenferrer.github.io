@@ -7,8 +7,8 @@
 <meta property="og:description" content="Implementing multi-select facet with Solr, Vue and Go" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://stevenferrer.github.io/posts/multi-select-facet/" />
-<meta property="article:published_time" content="2020-06-12T21:38:51+08:00" />
-<meta property="article:modified_time" content="2020-06-12T21:38:51+08:00" />
+<meta property="article:published_time" content="2020-06-30T16:59:01+08:00" />
+<meta property="article:modified_time" content="2020-06-30T16:59:01+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Multi-Select Facet with Solr, Vue and Go"/>
 <meta name="twitter:description" content="Implementing multi-select facet with Solr, Vue and Go"/>
@@ -56,7 +56,7 @@
 
 		<div class="post-header">
 			<h1 class="title">Multi-Select Facet with Solr, Vue and Go</h1>
-			<div class="meta">Posted at &mdash; Jun 12, 2020 <span class="draft-label">DRAFT</span> </div>
+			<div class="meta">Posted at &mdash; Jun 30, 2020</div>
 		</div>
 
 		<div class="markdown">
@@ -282,14 +282,73 @@ fields <span style="color:#719e07">:=</span> []solrschema.Field{
   }
 }
 </code></pre></div><p>For each bucket, we can see that we have the <code>val</code> which is unique value for the field, <code>count</code> which indicates the number of <code>skus</code> that matched, and the <code>productCount</code> which indicates the number of <em>unique</em> products that matched (i.e. Assume that <code>2 skus</code> matched the query but they both belong to the same parent product, thus <code>productCount</code> is <code>1</code>).</p>
-<h1 id="implementing-the-web-api">Implementing the web API</h1>
-<p>We will be using <a href="https://go.dev/">Go</a> to implement our web API.</p>
-<h1 id="implementing-the-single-page-application">Implementing the single-page application</h1>
-<p>Blah, blah, blah.</p>
-<h1 id="putting-it-all-together">Putting it all together</h1>
-<p>Blah, blah, blah.</p>
+<h1 id="api-implementation">API implementation</h1>
+<p>Our API will have a <code>/search</code> endpoint which will simplify the querying and processing of results for us. Optionally, we can have a <code>/suggest</code> endpoint for autosuggest feature.</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">$ curl http://localhost:8081/search?q=Apple&amp;colorFamilies=Black%2CGold&amp;operatingSystems=iOS
+</code></pre></div><p>Response:</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#268bd2">&#34;facets&#34;</span>: [
+    {
+      <span style="color:#268bd2">&#34;buckets&#34;</span>: [
+        {
+          <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">1</span>,
+          <span style="color:#268bd2">&#34;skuCount&#34;</span>: <span style="color:#2aa198">1</span>,
+          <span style="color:#268bd2">&#34;val&#34;</span>: <span style="color:#2aa198">&#34;Apple&#34;</span>
+        }
+      ],
+      <span style="color:#268bd2">&#34;name&#34;</span>: <span style="color:#2aa198">&#34;Brand&#34;</span>,
+      <span style="color:#268bd2">&#34;param&#34;</span>: <span style="color:#2aa198">&#34;brands&#34;</span>
+    },
+    {
+      <span style="color:#268bd2">&#34;buckets&#34;</span>: [
+        {
+          <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">2</span>,
+          <span style="color:#268bd2">&#34;skuCount&#34;</span>: <span style="color:#2aa198">2</span>,
+          <span style="color:#268bd2">&#34;val&#34;</span>: <span style="color:#2aa198">&#34;Space Grey&#34;</span>
+        },
+        {
+          <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">1</span>,
+          <span style="color:#268bd2">&#34;skuCount&#34;</span>: <span style="color:#2aa198">1</span>,
+          <span style="color:#268bd2">&#34;val&#34;</span>: <span style="color:#2aa198">&#34;Black&#34;</span>
+        },
+        {
+          <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">1</span>,
+          <span style="color:#268bd2">&#34;skuCount&#34;</span>: <span style="color:#2aa198">1</span>,
+          <span style="color:#268bd2">&#34;val&#34;</span>: <span style="color:#2aa198">&#34;Gold&#34;</span>
+        },
+        {
+          <span style="color:#268bd2">&#34;productCount&#34;</span>: <span style="color:#2aa198">1</span>,
+          <span style="color:#268bd2">&#34;skuCount&#34;</span>: <span style="color:#2aa198">1</span>,
+          <span style="color:#268bd2">&#34;val&#34;</span>: <span style="color:#2aa198">&#34;Midnight Green&#34;</span>
+        }
+      ],
+      <span style="color:#268bd2">&#34;name&#34;</span>: <span style="color:#2aa198">&#34;Color Family&#34;</span>,
+      <span style="color:#268bd2">&#34;param&#34;</span>: <span style="color:#2aa198">&#34;colorFamilies&#34;</span>
+    },
+    ...
+  ],
+  <span style="color:#268bd2">&#34;products&#34;</span>: [
+    {
+      <span style="color:#268bd2">&#34;brand&#34;</span>: <span style="color:#2aa198">&#34;Apple&#34;</span>,
+      <span style="color:#268bd2">&#34;category&#34;</span>: <span style="color:#2aa198">&#34;Electronic Devices&#34;</span>,
+      <span style="color:#268bd2">&#34;id&#34;</span>: <span style="color:#2aa198">&#34;1&#34;</span>,
+      <span style="color:#268bd2">&#34;name&#34;</span>: <span style="color:#2aa198">&#34;Apple iPhone 11 Pro Max&#34;</span>,
+      <span style="color:#268bd2">&#34;productType&#34;</span>: <span style="color:#2aa198">&#34;Smartphones&#34;</span>
+    }
+  ]
+}
+</code></pre></div><h1 id="front-end-implementation">Front-end implementation</h1>
+<p>Our web app will display the filters and the list of products that matched. We should be able to change the filters by checking/unchecking the filters on the left side of the screen.</p>
+<p><img src="/images/webapp.png" alt="webapp"></p>
 <h1 id="conclusion">Conclusion</h1>
-<p>Blah, blah, blah.</p>
+<p>For beginners like me, implementing a multi-select facet in Solr is very intidimidating task when you don&rsquo;t know where to start. Thankfully, Solr has a very good documentation and there are blogs written that explains how to implement them which guided me in my implementation.</p>
+<p>The complete implementation can be found in <a href="https://github.com/stevenferrer/multi-select-facet">this repository</a>. If you have any suggestions, you can open an issue in the repository.</p>
+<h1 id="references">References</h1>
+<ul>
+<li><a href="https://lucene.apache.org/solr/guide/8_5/">Apache Solr Reference Guide</a></li>
+<li><a href="https://blog.griddynamics.com/multi-select-faceting-for-nested-documents-in-solr/">How to implement multi-select faceting for nested documents in Solr</a></li>
+<li><a href="http://yonik.com/multi-select-faceting/">Multi-Select Faceting</a></li>
+</ul>
 
 		</div>
 

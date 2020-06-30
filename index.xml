@@ -7,9 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright 2020</copyright>
+    <lastBuildDate>Tue, 30 Jun 2020 16:59:01 +0800</lastBuildDate>
     
 	<atom:link href="https://stevenferrer.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Multi-Select Facet with Solr, Vue and Go</title>
+      <link>https://stevenferrer.github.io/posts/multi-select-facet/</link>
+      <pubDate>Tue, 30 Jun 2020 16:59:01 +0800</pubDate>
+      
+      <guid>https://stevenferrer.github.io/posts/multi-select-facet/</guid>
+      <description>Introduction A multi-select facet feature give the users the ability to quickly filter the product catalog and help them zero-in on the product that they need.</description>
+    </item>
     
     <item>
       <title>About Me</title>
