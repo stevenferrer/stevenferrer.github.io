@@ -166,10 +166,16 @@ fields <span style="color:#719e07">:=</span> []solrschema.Field{
 <p>Indexing is pretty straightforward, just open the data file and feed it to <em>Solr</em> and commit. That&rsquo;s it!</p>
 <div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	b, err <span style="color:#719e07">:=</span> ioutil.<span style="color:#268bd2">ReadFile</span>(dataPath)
 	<span style="color:#719e07">...</span>
-
-	<span style="color:#268bd2">var</span> docs []Map
-	err = json.<span style="color:#268bd2">Unmarshal</span>(b, <span style="color:#719e07">&amp;</span>docs)
+  
+	<span style="color:#586e75">// Note: `Map` here is an alias of map[string]interface{}
+</span><span style="color:#586e75"></span>	<span style="color:#268bd2">var</span> products []Map
+	err = json.<span style="color:#268bd2">Unmarshal</span>(b, <span style="color:#719e07">&amp;</span>products)
 	<span style="color:#719e07">...</span>
+
+	docs <span style="color:#719e07">:=</span> solrindex.<span style="color:#268bd2">NewDocs</span>()
+	<span style="color:#719e07">for</span> _, product <span style="color:#719e07">:=</span> <span style="color:#719e07">range</span> products {
+		docs.<span style="color:#268bd2">AddDoc</span>(product)
+	}
 
 	err = indexClient.<span style="color:#268bd2">AddDocs</span>(ctx, collection, docs)
 	<span style="color:#719e07">...</span>

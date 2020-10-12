@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright 2020</copyright>
-    <lastBuildDate>Tue, 30 Jun 2020 16:59:01 +0800</lastBuildDate>
-    
-	<atom:link href="https://sf9v.github.io/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 30 Jun 2020 16:59:01 +0800</lastBuildDate><atom:link href="https://sf9v.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Multi-Select Facet with Solr, Vue and Go</title>
       <link>https://sf9v.github.io/posts/multi-select-facet-solr-vue-go/</link>
@@ -27,7 +23,7 @@
       <pubDate>Sat, 23 May 2020 20:50:19 +0800</pubDate>
       
       <guid>https://sf9v.github.io/about/</guid>
-      <description>Hi! I&amp;rsquo;m Steven, a software engineer from The Philippines. I mostly write software in Go. Sometimes, I like to try out different technologies out of curiosity.</description>
+      <description>Hi! I&amp;rsquo;m Steven, a software engineer from Philippines. I mostly write software in Go. Sometimes, I like to try out different technologies out of curiosity.</description>
     </item>
     
   </channel>
