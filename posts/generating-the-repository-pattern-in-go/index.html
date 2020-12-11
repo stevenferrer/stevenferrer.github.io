@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Generating the repository pattern in Go - sf9v.github.io</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Generating the repository pattern in Go" />
+<meta property="og:description" content="An easy way to generate the repository pattern in Go" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sf9v.github.io/posts/generating-the-repository-pattern-in-go/" />
+<meta property="article:published_time" content="2020-12-11T09:00:17+00:00" />
+<meta property="article:modified_time" content="2020-12-11T09:00:17+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Generating the repository pattern in Go"/>
+<meta name="twitter:description" content="An easy way to generate the repository pattern in Go"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://sf9v.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://sf9v.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://sf9v.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://sf9v.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<h1 class="site-title"><a href="https://sf9v.github.io/">sf9v.github.io</a></h1>
+	<div class="site-description"><h2>Have a lot of fun!</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/sf9v" title="Github"><i data-feather="github"></i></a><a href="https://www.linkedin.com/in/steven-ferrer" title="Linkedin"><i data-feather="linkedin"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">home</a>
+			</li>
+			
+			<li>
+				<a href="/posts">all posts</a>
+			</li>
+			
+			<li>
+				<a href="/tags">tags</a>
+			</li>
+			
+			<li>
+				<a href="/about">about me</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">Generating the repository pattern in Go</h1>
+			<div class="meta">Posted at &mdash; Dec 11, 2020</div>
+		</div>
+
+		<div class="markdown">
+			<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="#contents">Contents</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#the-downside">The downside</a></li>
+<li><a href="#in-search-for-solutions">In search for solutions</a></li>
+<li><a href="#enter-nero">Enter nero!</a>
+<ul>
+<li><a href="#how-to-use-this-library">How to use this library?</a></li>
+<li><a href="#how-to-use-the-generated-code">How to use the generated code?</a></li>
+</ul>
+</li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>The <em>repository pattern</em> is a way to organize and abstract the data-access layer code. In Go, we do this by definig an interface that describes how we want to interact with it. Below is a typical example of a repository interface.</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#268bd2">type</span> ProductRepository <span style="color:#268bd2">interface</span> {
+    <span style="color:#268bd2">Create</span>(Product) <span style="color:#dc322f">error</span>
+    <span style="color:#268bd2">Get</span>(productID <span style="color:#dc322f">uint</span>) (<span style="color:#719e07">*</span>Product, <span style="color:#dc322f">error</span>)
+    <span style="color:#268bd2">Delete</span>(productID <span style="color:#dc322f">uint</span>) <span style="color:#dc322f">error</span>
+    <span style="color:#268bd2">List</span>(limit, offset <span style="color:#dc322f">uint</span>) ([]Product, <span style="color:#dc322f">error</span>)
+}
+</code></pre></div><p>This interface defines a basic CRUD (Create, Read, Update ,Delete) methods.</p>
+<h2 id="the-downside">The downside</h2>
+<p>The repository pattern is convenient because it enables us to interact with the interface (e.g. creating a product) without concerning ourselves with the implementation details. For example, we can write implementations that uses different backends like in-memory, file, postgres, mysql, boltdb etc. and client code will still be the same.</p>
+<p>The only downside (if you&rsquo;re lazy, like me) is that the process of <em>writing the implementations is often boring, repetitive, tedious and sometimes error-prone</em>. Depending on your implementation, it&rsquo;s often difficult to make a change (e.g. adding a new field) because you end-up changing a lot of things in different places.</p>
+<p>Surely, if there&rsquo;s only a way, I will very much want automate this task.</p>
+<h3 id="in-search-for-solutions">In search for solutions</h3>
+<p>In hope to find a solution, we went to search and the best that we can find are <a href="https://github.com/volatiletech/sqlboiler"><em>SQLBoiler</em></a> and <a href="https://github.com/facebook/ent"><em>ent</em></a>. These projects bothe uses code generation, which means we almost don&rsquo;t need to write code at all. They are almost exact match for our use-case. But, we wanted more control over the generated code and to easily integrate it with our existing codebase, with minimal to no change.</p>
+<p>Since no solution exactly matches our use-case, we&rsquo;ve decided to experiment on a small library.</p>
+<h2 id="enter-nero">Enter nero!</h2>
+<p>After a few weeks of experimentation, we&rsquo;ve produced a small library called <a href="https://github.com/sf9v/nero">nero</a> that enables us to do what we want: <strong>to generate the exact same code that we&rsquo;re writing manually, but better</strong>. This library uses-code generation similar to the libraries above.</p>
+<h3 id="how-to-use-this-library">How to use this library?</h3>
+<p>Given an (existing) <em>model</em> called <code>Product</code>.</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#268bd2">type</span> Product <span style="color:#268bd2">struct</span> {
+	ID        <span style="color:#dc322f">int64</span>
+	Name      <span style="color:#dc322f">string</span>
+	CreatedAt <span style="color:#719e07">*</span>time.Time
+	UpdatedAt <span style="color:#719e07">*</span>time.Time
+}
+</code></pre></div><p>We need to define the schema.</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#719e07">import</span> (
+    <span style="color:#2aa198">&#34;github.com/sf9v/nero&#34;</span>
+)
+<span style="color:#719e07">...</span>
+
+<span style="color:#268bd2">func</span> (p <span style="color:#719e07">*</span>Product) <span style="color:#268bd2">Schema</span>() <span style="color:#719e07">*</span>nero.Schema {
+	<span style="color:#719e07">return</span> <span style="color:#719e07">&amp;</span>nero.Schema{
+        <span style="color:#586e75">// Package name of the generated code
+</span><span style="color:#586e75"></span>        Pkg:        <span style="color:#2aa198">&#34;repository&#34;</span>,
+        <span style="color:#586e75">// Collection/table name (for relational databases)
+</span><span style="color:#586e75"></span>        Collection: <span style="color:#2aa198">&#34;products&#34;</span>,
+        <span style="color:#586e75">// List of columns
+</span><span style="color:#586e75"></span>		Columns: []<span style="color:#719e07">*</span>nero.Column{
+			nero.<span style="color:#268bd2">NewColumn</span>(<span style="color:#2aa198">&#34;id&#34;</span>, p.ID).<span style="color:#268bd2">StructField</span>(<span style="color:#2aa198">&#34;ID&#34;</span>).<span style="color:#268bd2">Ident</span>().<span style="color:#268bd2">Auto</span>(),
+			nero.<span style="color:#268bd2">NewColumn</span>(<span style="color:#2aa198">&#34;name&#34;</span>, p.Name),
+			nero.<span style="color:#268bd2">NewColumn</span>(<span style="color:#2aa198">&#34;created_at&#34;</span>, p.CreatedAt).<span style="color:#268bd2">Auto</span>(),
+			nero.<span style="color:#268bd2">NewColumn</span>(<span style="color:#2aa198">&#34;updated_at&#34;</span>, p.UpdatedAt),
+		},
+	}
+}
+</code></pre></div><p>From above, we defined the package name of the generated code, the collection or table name (for relational databases) and the list of columns. We didn&rsquo;t need to define the column types since the library already infers the type. These are the only information that the library needs to start generating.</p>
+<p>The library didn&rsquo;t (yet) have a CLI, so we have to import it to create our own generator.</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#719e07">import</span> (
+    <span style="color:#586e75">// import the gen package
+</span><span style="color:#586e75"></span>    <span style="color:#2aa198">&#34;github.com/sf9v/nero/gen&#34;</span>
+
+    <span style="color:#2aa198">&#34;github.com/sf9v/nero-example/model&#34;</span>
+)
+<span style="color:#719e07">...</span>
+
+<span style="color:#586e75">// 1. Generate the files
+</span><span style="color:#586e75"></span>files, err <span style="color:#719e07">:=</span> gen.<span style="color:#268bd2">Generate</span>(<span style="color:#b58900">new</span>(model.Product))
+<span style="color:#719e07">...</span>
+
+<span style="color:#586e75">// 2. Create the destination directory (i.e. nero-example/repository)
+</span><span style="color:#586e75"></span>basePath <span style="color:#719e07">:=</span> <span style="color:#2aa198">&#34;repository&#34;</span>
+err = os.<span style="color:#268bd2">MkdirAll</span>(basePath, os.ModePerm)
+<span style="color:#719e07">...</span>
+
+<span style="color:#586e75">// 3. Finally, render the files
+</span><span style="color:#586e75"></span><span style="color:#719e07">for</span> _, file <span style="color:#719e07">:=</span> <span style="color:#719e07">range</span> files {
+    err = file.<span style="color:#268bd2">Render</span>(basePath)
+    <span style="color:#719e07">...</span>
+}
+</code></pre></div><p>This CLI tool will generate the repository code in the given directry (i.e. nero-example/repository).</p>
+<h3 id="how-to-use-the-generated-code">How to use the generated code?</h3>
+<p>The library is heavily inspired by <a href="https://github.com/facebook/ent"><em>ent</em></a> so the resulting API almost looks similar. To start using it, we have to import the generated package and initialize a new repository.</p>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#719e07">import</span> (
+    <span style="color:#2aa198">&#34;database/sql&#34;</span>
+
+    <span style="color:#586e75">// postgres driver
+</span><span style="color:#586e75"></span>    _ <span style="color:#2aa198">&#34;github.com/lib/pq&#34;</span>
+
+    <span style="color:#2aa198">&#34;github.com/sf9v/nero-example/repository&#34;</span>
+)
+
+<span style="color:#586e75">// open a postgres db connection
+</span><span style="color:#586e75"></span>db, err <span style="color:#719e07">:=</span> sql.<span style="color:#268bd2">Open</span>(<span style="color:#2aa198">&#34;postgres&#34;</span>, dsn)
+<span style="color:#719e07">...</span>
+
+<span style="color:#586e75">// initialize a repository using the db connection
+</span><span style="color:#586e75"></span>repo <span style="color:#719e07">:=</span> repository.<span style="color:#268bd2">NewPostgresRepository</span>(db)
+<span style="color:#719e07">...</span>
+</code></pre></div><p>Below is the demonstration of basic the API.</p>
+<ul>
+<li>Create</li>
+</ul>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">productID, err <span style="color:#719e07">:=</span> repo.<span style="color:#268bd2">Create</span>(ctx, repository.<span style="color:#268bd2">NewCreator</span>().
+    <span style="color:#268bd2">Name</span>(<span style="color:#2aa198">&#34;Product 1&#34;</span>))
+<span style="color:#719e07">...</span>
+
+</code></pre></div><ul>
+<li>Query</li>
+</ul>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">product, err <span style="color:#719e07">:=</span> repo.<span style="color:#268bd2">QueryOne</span>(ctx, repository.<span style="color:#268bd2">NewQueryer</span>().
+    <span style="color:#268bd2">Where</span>(repository.<span style="color:#268bd2">IDEq</span>(productID)))
+<span style="color:#719e07">...</span>
+</code></pre></div><ul>
+<li>Update</li>
+</ul>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">_, err = repo.<span style="color:#268bd2">Update</span>(ctx, repository.<span style="color:#268bd2">NewUpdater</span>().
+    <span style="color:#268bd2">Name</span>(<span style="color:#2aa198">&#34;Updated Product 1&#34;</span>).<span style="color:#268bd2">UpdatedAt</span>(<span style="color:#719e07">&amp;</span>now).
+    <span style="color:#268bd2">Where</span>(repository.<span style="color:#268bd2">IDEq</span>(productID)))
+</code></pre></div><ul>
+<li>Delete</li>
+</ul>
+<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">_, err = repo.<span style="color:#268bd2">Delete</span>(ctx, repository.<span style="color:#268bd2">NewDeleter</span>().
+    <span style="color:#268bd2">Where</span>(repository.<span style="color:#268bd2">IDEq</span>(productID)))
+</code></pre></div><p>The generated code provides a convenient API to perform the basic CRUD operations. The complete example can be found in <a href="https://github.com/sf9v/nero-example">this repository</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The repository pattern is a way of organizing the data-access layer code which allows us to interact with the interface without concerning ourselves with the implementation details. Writing the repository layer manually is often tedious and error-prone. To ease this process, we offered a library called <a href="https://github.com/sf9v/nero">nero</a> to automate this boring task. This library provides a convenient API for interacting with the database.</p>
+<p>We hope you would find it enjoyable and useful as much as we did!</p>
+<p>PS: If you have any suggestions and ideas on how to improve this library, please feel free to <a href="https://github.com/sf9v/nero/issues/new">open an issue</a>!</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://threedots.tech/post/repository-pattern-in-go/">The Repository pattern</a></li>
+<li><a href="https://deviq.com/repository-pattern/">Repository Pattern</a></li>
+</ul>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/code-generation">code-generation</a></li>
+								
+								<li><a href="/tags/repository-pattern">repository-pattern</a></li>
+								
+								<li><a href="/tags/data-access-layer">data-access-layer</a></li>
+								
+								<li><a href="/tags/go">go</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright 2020 |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script>feather.replace()</script>
+</body>
+</html>
