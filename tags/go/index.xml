@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright 2020</copyright>
-    <lastBuildDate>Tue, 30 Jun 2020 16:59:01 +0800</lastBuildDate><atom:link href="https://sf9v.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Dec 2020 07:33:35 +0000</lastBuildDate><atom:link href="https://sf9v.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Generating the repository layer in Go</title>
+      <link>https://sf9v.github.io/posts/generating-the-repository-layer-in-go/</link>
+      <pubDate>Fri, 11 Dec 2020 07:33:35 +0000</pubDate>
+      
+      <guid>https://sf9v.github.io/posts/generating-the-repository-layer-in-go/</guid>
+      <description>Contents  Contents Introduction The downside In search for solutions Enter nero!  How to use this library? How to use the generated code?</description>
+    </item>
+    
     <item>
       <title>Multi-Select Facet with Solr, Vue and Go</title>
       <link>https://sf9v.github.io/posts/multi-select-facet-solr-vue-go/</link>

@@ -61,7 +61,7 @@
 
 		<div class="markdown">
 			<p><img src="/images/multi-select-facet-amz.png" alt="multi-select facet amz"></p>
-<h1 id="contents">Contents</h1>
+<h2 id="contents">Contents</h2>
 <ul>
 <li><a href="#contents">Contents</a></li>
 <li><a href="#introduction">Introduction</a></li>
@@ -78,12 +78,12 @@
 <li><a href="#conclusion">Conclusion</a></li>
 <li><a href="#references">References</a></li>
 </ul>
-<h1 id="introduction">Introduction</h1>
+<h2 id="introduction">Introduction</h2>
 <p>A <em>multi-select facet</em> feature give the users the ability to quickly filter the product catalog and help them zero-in on the product that they need. The majority of e-commerces websites support this feature and if you have shopped online before, then you had probably used it before.</p>
 <p>I needed to support exactly the same feature for one my project but I didn&rsquo;t know where to start. I didn&rsquo;t even know what this feature was called. I scoured the internet until, luckily, I found this amazing <a href="https://blog.griddynamics.com/multi-select-faceting-for-nested-documents-in-solr/">blog post</a>. It&rsquo;s a very detailed explanation of how to implement a multi-select facet query in <a href="https://lucene.apache.org/solr/">Solr</a>.</p>
 <p>In this blog post, we&rsquo;re going to take it further and implement a <a href="https://en.wikipedia.org/wiki/Web_API">web API</a> and a <a href="https://en.wikipedia.org/wiki/Single-page_application">single-page application</a>.</p>
-<h1 id="indexing-and-querying">Indexing and querying</h1>
-<h2 id="the-data">The data</h2>
+<h2 id="indexing-and-querying">Indexing and querying</h2>
+<h3 id="the-data">The data</h3>
 <p>We&rsquo;re going to use <em>smartphones</em> and <em>e-readers</em> as our product data since they both have similar attributes. Each record will have a set of <a href="https://en.wikipedia.org/wiki/Stock_keeping_unit"><code>SKUs</code></a>. For example, the first record in our data contains a <em>Apple iPhone 11 Pro Max</em> which has <code>2 variants</code>. The first one has a <em>color</em> of <em>Black</em> with <em>storage capacity</em> of <em>256G</em> and the other one has a <em>color</em> of <em>Space Grey</em> with a <em>storage capacity</em> of <em>64GB</em>.</p>
 <div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
   {
@@ -112,7 +112,7 @@
   }
   ...
 ]
-</code></pre></div><h2 id="defining-our-schema">Defining our schema</h2>
+</code></pre></div><h3 id="defining-our-schema">Defining our schema</h3>
 <p>From the above, we have the following list of fields.</p>
 <ul>
 <li>name - e.g. <em>Apple iPhone 11 Pro Max</em></li>
@@ -162,7 +162,7 @@ fields <span style="color:#719e07">:=</span> []solrschema.Field{
   <span style="color:#719e07">...</span>
 }
 <span style="color:#719e07">...</span>
-</code></pre></div><h2 id="indexing-the-data">Indexing the data</h2>
+</code></pre></div><h3 id="indexing-the-data">Indexing the data</h3>
 <p>Indexing is pretty straightforward, just open the data file and feed it to <em>Solr</em> and commit. That&rsquo;s it!</p>
 <div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	b, err <span style="color:#719e07">:=</span> ioutil.<span style="color:#268bd2">ReadFile</span>(dataPath)
 	<span style="color:#719e07">...</span>
@@ -305,7 +305,7 @@ fields <span style="color:#719e07">:=</span> []solrschema.Field{
   }
 }
 </code></pre></div><p>For each bucket, we can see that we have the <code>val</code> which is unique value for the field, <code>count</code> which indicates the number of <code>skus</code> that matched, and the <code>productCount</code> which indicates the number of <em>unique</em> products that matched (i.e. Assume that <code>2 skus</code> matched the query but they both belong to the same parent product, thus <code>productCount</code> is <code>1</code>).</p>
-<h1 id="api-implementation">API implementation</h1>
+<h2 id="api-implementation">API implementation</h2>
 <p>Our API will have a <code>/search</code> endpoint which will simplify the querying and processing of results for us. Optionally, we can have a <code>/suggest</code> endpoint for autosuggest feature.</p>
 <div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">$ curl http://localhost:8081/search?q=Apple&amp;colorFamilies=Black%2CGold&amp;operatingSystems=iOS
 </code></pre></div><p>Response:</p>
@@ -360,13 +360,13 @@ fields <span style="color:#719e07">:=</span> []solrschema.Field{
     }
   ]
 }
-</code></pre></div><h1 id="front-end-implementation">Front-end implementation</h1>
+</code></pre></div><h2 id="front-end-implementation">Front-end implementation</h2>
 <p>Our web app will display the filters and the list of products that matched. We should be able to change the filters by checking/unchecking the filters on the left side of the screen.</p>
 <p><img src="/images/webapp.png" alt="webapp"></p>
-<h1 id="conclusion">Conclusion</h1>
+<h2 id="conclusion">Conclusion</h2>
 <p>For beginners like me, implementing a multi-select facet in Solr is very intidimidating task when you don&rsquo;t know where to start. Thankfully, Solr has a very good documentation and there are blogs written that explains how to implement them which guided me in my implementation.</p>
 <p>The complete implementation can be found in <a href="https://github.com/sf9v/multi-select-facet">this repository</a>. If you have any suggestions, you can open an issue in the repository.</p>
-<h1 id="references">References</h1>
+<h2 id="references">References</h2>
 <ul>
 <li><a href="https://lucene.apache.org/solr/guide/8_5/">Apache Solr Reference Guide</a></li>
 <li><a href="https://blog.griddynamics.com/multi-select-faceting-for-nested-documents-in-solr/">How to implement multi-select faceting for nested documents in Solr</a></li>
