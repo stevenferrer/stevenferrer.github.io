@@ -85,7 +85,7 @@
 }
 </code></pre></div><p>This interface defines a basic CRUD (Create, Read, Update ,Delete) methods.</p>
 <h2 id="the-downside">The downside</h2>
-<p>The repository pattern is convenient because it enables us to interact with it (e.g. creating a product) without concerning ourselves with the implementation details. For example, we can write implementations that uses different backends like in-memory, file, postgres, mysql, boltdb etc. and client code will not change.</p>
+<p>The repository pattern is convenient because it enables us to interact with the interface (e.g. creating a product) without concerning ourselves with the implementation details. For example, we can write implementations that uses different backends like in-memory, file, postgres, mysql, boltdb etc. and client code will still be the same.</p>
 <p>The only downside (if you&rsquo;re lazy, like me) is that the process of <em>writing the implementations is often boring, repetitive, tedious and sometimes error-prone</em>. Depending on your implementation, it&rsquo;s often difficult to make a change (e.g. adding a new field) because you end-up changing a lot of things in different places.</p>
 <p>Surely, if there&rsquo;s only a way, I will very much want automate this task.</p>
 <h3 id="in-search-for-solutions">In search for solutions</h3>
@@ -192,7 +192,8 @@ err = os.<span style="color:#268bd2">MkdirAll</span>(basePath, os.ModePerm)
     <span style="color:#268bd2">Where</span>(repository.<span style="color:#268bd2">IDEq</span>(productID)))
 </code></pre></div><p>The generated code provides a convenient API to perform the basic CRUD operations. The complete example can be found in <a href="https://github.com/sf9v/nero-example">this repository</a>.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>The repository pattern is a of organizing the data-access layer code. Writing the repository layer manually is often tedious and error-prone. We offer a small library called <a href="https://github.com/sf9v/nero">nero</a> to automate this boring task, which provides a convenient API for interacting with the database. We hope you would find it enjoyable and useful as much as we did!</p>
+<p>The repository pattern is a way of organizing the data-access layer code which allows us to interact with the interface without concerning ourselves with the implementation details. Writing the repository layer manually is often tedious and error-prone. To ease this process, we offered a library called <a href="https://github.com/sf9v/nero">nero</a> to automate this boring task. This library provides a convenient API for interacting with the database.</p>
+<p>We hope you would find it enjoyable and useful as much as we did!</p>
 <p>PS: If you have any suggestions and ideas on how to improve this library, please feel free to <a href="https://github.com/sf9v/nero/issues/new">open an issue</a>!</p>
 <h2 id="references">References</h2>
 <ul>
