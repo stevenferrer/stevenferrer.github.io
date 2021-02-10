@@ -14,7 +14,7 @@
       <pubDate>Tue, 30 Jun 2020 16:59:01 +0800</pubDate>
       
       <guid>https://sf9v.github.io/posts/multi-select-facet-solr-vue-go/</guid>
-      <description>Contents  Contents Introduction Indexing and querying  The data Defining our schema Indexing the data Query with facet   API Implementation Front-end implementation Conclusion References  Introduction A multi-select facet feature give the users the ability to quickly filter the product catalog and help them zero-in on the product that they need.</description>
+      <description>Contents  Introduction Indexing and querying  The data Defining our schema Indexing the data Query with facet   API Implementation Front-end implementation Conclusion References  Changelog  02/10/2021: Update examples to use the latest version of solr-go.</description>
     </item>
     
   </channel>

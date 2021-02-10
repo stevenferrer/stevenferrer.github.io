@@ -3,63 +3,68 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://sf9v.github.io/tags/code-generation/</loc>
-    <lastmod>2020-12-11T09:00:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://sf9v.github.io/tags/data-access-layer/</loc>
-    <lastmod>2020-12-11T09:00:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://sf9v.github.io/posts/generating-the-repository-pattern-in-go/</loc>
-    <lastmod>2020-12-11T09:00:17+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://sf9v.github.io/tags/go/</loc>
-    <lastmod>2020-12-11T09:00:17+00:00</lastmod>
+    <lastmod>2021-02-10T02:12:31+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://sf9v.github.io/posts/</loc>
-    <lastmod>2020-12-11T09:00:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://sf9v.github.io/tags/repository-pattern/</loc>
-    <lastmod>2020-12-11T09:00:17+00:00</lastmod>
+    <lastmod>2021-02-10T02:12:31+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://sf9v.github.io/</loc>
-    <lastmod>2020-12-11T09:00:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://sf9v.github.io/tags/</loc>
-    <lastmod>2020-12-11T09:00:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://sf9v.github.io/posts/multi-select-facet-solr-vue-go/</loc>
-    <lastmod>2020-06-30T16:59:01+08:00</lastmod>
+    <lastmod>2021-02-10T02:12:31+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://sf9v.github.io/tags/solr/</loc>
-    <lastmod>2020-06-30T16:59:01+08:00</lastmod>
+    <lastmod>2021-02-10T02:12:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sf9v.github.io/posts/solr-go-0.2-released/</loc>
+    <lastmod>2021-02-10T02:12:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sf9v.github.io/tags/</loc>
+    <lastmod>2021-02-10T02:12:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sf9v.github.io/tags/code-generation/</loc>
+    <lastmod>2021-02-10T02:07:28+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sf9v.github.io/tags/data-access-layer/</loc>
+    <lastmod>2021-02-10T02:07:28+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sf9v.github.io/posts/generating-the-repository-pattern-in-go/</loc>
+    <lastmod>2021-02-10T02:07:28+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sf9v.github.io/tags/repository-pattern/</loc>
+    <lastmod>2021-02-10T02:07:28+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sf9v.github.io/posts/multi-select-facet-solr-vue-go/</loc>
+    <lastmod>2021-02-10T02:07:28+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://sf9v.github.io/tags/vue/</loc>
-    <lastmod>2020-06-30T16:59:01+08:00</lastmod>
+    <lastmod>2021-02-10T02:07:28+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://sf9v.github.io/about/</loc>
-    <lastmod>2020-05-23T20:50:19+08:00</lastmod>
+    <lastmod>2021-02-10T02:07:28+00:00</lastmod>
   </url>
   
 </urlset>

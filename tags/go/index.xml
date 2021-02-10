@@ -7,14 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright 2020</copyright>
-    <lastBuildDate>Fri, 11 Dec 2020 09:00:17 +0000</lastBuildDate><atom:link href="https://sf9v.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Feb 2021 02:12:31 +0000</lastBuildDate><atom:link href="https://sf9v.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Solr-Go 0.2 released!</title>
+      <link>https://sf9v.github.io/posts/solr-go-0.2-released/</link>
+      <pubDate>Wed, 10 Feb 2021 02:12:31 +0000</pubDate>
+      
+      <guid>https://sf9v.github.io/posts/solr-go-0.2-released/</guid>
+      <description>Contents  Introduction What&amp;rsquo;s new?  Other changes   Thanks!  Introduction Solr-Go started as a rudimentary client for interacting with Solr in Go.</description>
+    </item>
+    
     <item>
       <title>Generating the repository pattern in Go</title>
       <link>https://sf9v.github.io/posts/generating-the-repository-pattern-in-go/</link>
       <pubDate>Fri, 11 Dec 2020 09:00:17 +0000</pubDate>
       
       <guid>https://sf9v.github.io/posts/generating-the-repository-pattern-in-go/</guid>
-      <description>Contents  Contents Introduction The downside In search for solutions Enter nero!  How to use this library? How to use the generated code?</description>
+      <description>Contents  Introduction The downside In search for solutions Enter nero!  How to use this library? How to use the generated code?</description>
     </item>
     
     <item>
@@ -23,7 +32,7 @@
       <pubDate>Tue, 30 Jun 2020 16:59:01 +0800</pubDate>
       
       <guid>https://sf9v.github.io/posts/multi-select-facet-solr-vue-go/</guid>
-      <description>Contents  Contents Introduction Indexing and querying  The data Defining our schema Indexing the data Query with facet   API Implementation Front-end implementation Conclusion References  Introduction A multi-select facet feature give the users the ability to quickly filter the product catalog and help them zero-in on the product that they need.</description>
+      <description>Contents  Introduction Indexing and querying  The data Defining our schema Indexing the data Query with facet   API Implementation Front-end implementation Conclusion References  Changelog  02/10/2021: Update examples to use the latest version of solr-go.</description>
     </item>
     
   </channel>
