@@ -36,12 +36,12 @@
     </item>
     
     <item>
-      <title>About</title>
+      <title>About Me</title>
       <link>https://sf9v.github.io/about/</link>
       <pubDate>Sat, 23 May 2020 20:50:19 +0800</pubDate>
       
       <guid>https://sf9v.github.io/about/</guid>
-      <description>Hi! I&amp;rsquo;m Steven, a software engineer from Philippines. I mostly write software in Go but I like to try &amp;ldquo;shiny things&amp;rdquo; just for the fun of it!</description>
+      <description>Hi! I&amp;rsquo;m Steven, a software engineer from Philippines. I mostly write software in Go but I like to try new technologies just for the fun of it.</description>
     </item>
     
   </channel>
