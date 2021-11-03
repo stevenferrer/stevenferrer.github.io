@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>sf9v.github.io</title>
-    <link>https://sf9v.github.io/</link>
-    <description>Recent content on sf9v.github.io</description>
+    <title>stevenferrer.github.io</title>
+    <link>https://stevenferrer.github.io/</link>
+    <description>Recent content on stevenferrer.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright 2020</copyright>
-    <lastBuildDate>Wed, 10 Feb 2021 02:12:31 +0000</lastBuildDate><atom:link href="https://sf9v.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Feb 2021 02:12:31 +0000</lastBuildDate><atom:link href="https://stevenferrer.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Solr-Go 0.2 released!</title>
-      <link>https://sf9v.github.io/posts/solr-go-0.2-released/</link>
+      <link>https://stevenferrer.github.io/posts/solr-go-0.2-released/</link>
       <pubDate>Wed, 10 Feb 2021 02:12:31 +0000</pubDate>
       
-      <guid>https://sf9v.github.io/posts/solr-go-0.2-released/</guid>
+      <guid>https://stevenferrer.github.io/posts/solr-go-0.2-released/</guid>
       <description>Contents  Introduction What&amp;rsquo;s new?  Other changes   Thanks!  Introduction Solr-Go started as a rudimentary client for interacting with Solr in Go.</description>
     </item>
     
     <item>
       <title>Generating the repository pattern in Go</title>
-      <link>https://sf9v.github.io/posts/generating-the-repository-pattern-in-go/</link>
+      <link>https://stevenferrer.github.io/posts/generating-the-repository-pattern-in-go/</link>
       <pubDate>Fri, 11 Dec 2020 09:00:17 +0000</pubDate>
       
-      <guid>https://sf9v.github.io/posts/generating-the-repository-pattern-in-go/</guid>
+      <guid>https://stevenferrer.github.io/posts/generating-the-repository-pattern-in-go/</guid>
       <description>Contents  Introduction The downside In search for solutions Enter nero!  How to use this library? How to use the generated code?</description>
     </item>
     
     <item>
       <title>Multi-Select Facet with Solr, Vue and Go</title>
-      <link>https://sf9v.github.io/posts/multi-select-facet-solr-vue-go/</link>
+      <link>https://stevenferrer.github.io/posts/multi-select-facet-solr-vue-go/</link>
       <pubDate>Tue, 30 Jun 2020 16:59:01 +0800</pubDate>
       
-      <guid>https://sf9v.github.io/posts/multi-select-facet-solr-vue-go/</guid>
+      <guid>https://stevenferrer.github.io/posts/multi-select-facet-solr-vue-go/</guid>
       <description>Contents  Introduction Indexing and querying  The data Defining our schema Indexing the data Query with facet   API Implementation Front-end implementation Conclusion References  Changelog  02/10/2021: Update examples to use the latest version of solr-go.</description>
     </item>
     
     <item>
       <title>About Me</title>
-      <link>https://sf9v.github.io/about/</link>
+      <link>https://stevenferrer.github.io/about/</link>
       <pubDate>Sat, 23 May 2020 20:50:19 +0800</pubDate>
       
-      <guid>https://sf9v.github.io/about/</guid>
+      <guid>https://stevenferrer.github.io/about/</guid>
       <description>Hi! I&amp;rsquo;m Steven, a software engineer from Philippines. I mostly write software in Go but I like to try new technologies just for the fun of it.</description>
     </item>
     
