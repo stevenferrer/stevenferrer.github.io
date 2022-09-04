@@ -14,7 +14,7 @@
       <pubDate>Wed, 10 Feb 2021 02:12:31 +0000</pubDate>
       
       <guid>https://stevenferrer.github.io/posts/solr-go-0.2-released/</guid>
-      <description>Contents  Introduction What&amp;rsquo;s new?  Other changes   Thanks!  Introduction Solr-Go started as a rudimentary client for interacting with Solr in Go.</description>
+      <description>Contents Introduction What&amp;rsquo;s new? Other changes Thanks! Introduction Solr-Go started as a rudimentary client for interacting with Solr in Go. It was built for maximum flexibility, which sacrificed the usability.</description>
     </item>
     
     <item>
@@ -23,7 +23,7 @@
       <pubDate>Fri, 11 Dec 2020 09:00:17 +0000</pubDate>
       
       <guid>https://stevenferrer.github.io/posts/generating-the-repository-pattern-in-go/</guid>
-      <description>Contents  Introduction The downside In search for solutions Enter nero!  How to use this library? How to use the generated code?</description>
+      <description>Contents Introduction The downside In search for solutions Enter nero! How to use this library? How to use the generated code?</description>
     </item>
     
     <item>
@@ -32,7 +32,7 @@
       <pubDate>Tue, 30 Jun 2020 16:59:01 +0800</pubDate>
       
       <guid>https://stevenferrer.github.io/posts/multi-select-facet-solr-vue-go/</guid>
-      <description>Contents  Introduction Indexing and querying  The data Defining our schema Indexing the data Query with facet   API Implementation Front-end implementation Conclusion References  Changelog  02/10/2021: Update examples to use the latest version of solr-go.</description>
+      <description>Contents Introduction Indexing and querying The data Defining our schema Indexing the data Query with facet API Implementation Front-end implementation Conclusion References Changelog 02/10/2021: Update examples to use the latest version of solr-go.</description>
     </item>
     
   </channel>

@@ -14,7 +14,7 @@
       <pubDate>Tue, 30 Jun 2020 16:59:01 +0800</pubDate>
       
       <guid>https://stevenferrer.github.io/posts/multi-select-facet-solr-vue-go/</guid>
-      <description>Contents  Introduction Indexing and querying  The data Defining our schema Indexing the data Query with facet   API Implementation Front-end implementation Conclusion References  Changelog  02/10/2021: Update examples to use the latest version of solr-go.</description>
+      <description>Contents Introduction Indexing and querying The data Defining our schema Indexing the data Query with facet API Implementation Front-end implementation Conclusion References Changelog 02/10/2021: Update examples to use the latest version of solr-go.</description>
     </item>
     
   </channel>
