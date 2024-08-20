@@ -4,63 +4,52 @@
     <title>Tags on stevenferrer.github.io</title>
     <link>https://stevenferrer.github.io/tags/</link>
     <description>Recent content in Tags on stevenferrer.github.io</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <copyright>© Copyright 2020</copyright>
-    <lastBuildDate>Wed, 10 Feb 2021 02:12:31 +0000</lastBuildDate><atom:link href="https://stevenferrer.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>© Copyright Steven Ferrer</copyright>
+    <lastBuildDate>Wed, 10 Feb 2021 02:12:31 +0000</lastBuildDate>
+    <atom:link href="https://stevenferrer.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>go</title>
+      <title>Go</title>
       <link>https://stevenferrer.github.io/tags/go/</link>
       <pubDate>Wed, 10 Feb 2021 02:12:31 +0000</pubDate>
-      
       <guid>https://stevenferrer.github.io/tags/go/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>solr</title>
+      <title>Solr</title>
       <link>https://stevenferrer.github.io/tags/solr/</link>
       <pubDate>Wed, 10 Feb 2021 02:12:31 +0000</pubDate>
-      
       <guid>https://stevenferrer.github.io/tags/solr/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>code-generation</title>
+      <title>Code-Generation</title>
       <link>https://stevenferrer.github.io/tags/code-generation/</link>
       <pubDate>Fri, 11 Dec 2020 09:00:17 +0000</pubDate>
-      
       <guid>https://stevenferrer.github.io/tags/code-generation/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>data-access-layer</title>
+      <title>Data-Access-Layer</title>
       <link>https://stevenferrer.github.io/tags/data-access-layer/</link>
       <pubDate>Fri, 11 Dec 2020 09:00:17 +0000</pubDate>
-      
       <guid>https://stevenferrer.github.io/tags/data-access-layer/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>repository-pattern</title>
+      <title>Repository-Pattern</title>
       <link>https://stevenferrer.github.io/tags/repository-pattern/</link>
       <pubDate>Fri, 11 Dec 2020 09:00:17 +0000</pubDate>
-      
       <guid>https://stevenferrer.github.io/tags/repository-pattern/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>vue</title>
+      <title>Vue</title>
       <link>https://stevenferrer.github.io/tags/vue/</link>
       <pubDate>Tue, 30 Jun 2020 16:59:01 +0800</pubDate>
-      
       <guid>https://stevenferrer.github.io/tags/vue/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

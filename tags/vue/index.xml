@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>vue on stevenferrer.github.io</title>
+    <title>Vue on stevenferrer.github.io</title>
     <link>https://stevenferrer.github.io/tags/vue/</link>
-    <description>Recent content in vue on stevenferrer.github.io</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Vue on stevenferrer.github.io</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <copyright>© Copyright 2020</copyright>
-    <lastBuildDate>Tue, 30 Jun 2020 16:59:01 +0800</lastBuildDate><atom:link href="https://stevenferrer.github.io/tags/vue/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>© Copyright Steven Ferrer</copyright>
+    <lastBuildDate>Wed, 10 Feb 2021 02:07:28 +0000</lastBuildDate>
+    <atom:link href="https://stevenferrer.github.io/tags/vue/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Multi-Select Facet with Solr, Vue and Go</title>
       <link>https://stevenferrer.github.io/posts/multi-select-facet-solr-vue-go/</link>
       <pubDate>Tue, 30 Jun 2020 16:59:01 +0800</pubDate>
-      
       <guid>https://stevenferrer.github.io/posts/multi-select-facet-solr-vue-go/</guid>
       <description>Contents Introduction Indexing and querying The data Defining our schema Indexing the data Query with facet API Implementation Front-end implementation Conclusion References Changelog 02/10/2021: Update examples to use the latest version of solr-go.</description>
     </item>
-    
   </channel>
 </rss>
