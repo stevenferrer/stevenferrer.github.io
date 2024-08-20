@@ -31,11 +31,11 @@
       <description>Contents Introduction Indexing and querying The data Defining our schema Indexing the data Query with facet API Implementation Front-end implementation Conclusion References Changelog 02/10/2021: Update examples to use the latest version of solr-go.</description>
     </item>
     <item>
-      <title>About Me</title>
+      <title>About</title>
       <link>https://stevenferrer.github.io/about/</link>
       <pubDate>Sat, 23 May 2020 20:50:19 +0800</pubDate>
       <guid>https://stevenferrer.github.io/about/</guid>
-      <description>Hi! I&amp;rsquo;m Steven, a software engineer from Philippines. I mostly write software in Go but I like to try new technologies just for the fun of it.</description>
+      <description>Hey, I&amp;rsquo;m Steven, a software engineer from The Philippines and this is my tech blog. I&amp;rsquo;m mostly interested in backend engineering and distributed systems but I also like explore other things like embedded systems(stm32), graphics(opengl) and blockchain 3.</description>
     </item>
   </channel>
 </rss>
