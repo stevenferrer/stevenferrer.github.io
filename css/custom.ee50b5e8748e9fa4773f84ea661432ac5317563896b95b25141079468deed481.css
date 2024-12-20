@@ -1,0 +1,15 @@
+.mytable1  {
+    table-layout: fixed;
+}
+
+.mytable1 tr:nth-child(1) {
+    width: 10%;
+}
+
+.mytable1 tr:nth-child(3) {
+    width: 50%;
+}
+
+.mytable1 tr figure {
+    border: none;
+}

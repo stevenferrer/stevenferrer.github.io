@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>How to Setup ESP-IDF on FreeBSD 14 - stevenferrer.github.io</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="A guide on how to setup ESP-IDF on FreeBSD 14" />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="http://localhost:1313/posts/how-to-setup-esp-idf-on-freebsd-14/">
+  <meta property="og:site_name" content="stevenferrer.github.io">
+  <meta property="og:title" content="How to Setup ESP-IDF on FreeBSD 14">
+  <meta property="og:description" content="A guide on how to setup ESP-IDF on FreeBSD 14">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-12-05T15:04:30+08:00">
+    <meta property="article:modified_time" content="2024-12-05T15:04:30+08:00">
+    <meta property="article:tag" content="Freebsd">
+    <meta property="article:tag" content="Esp">
+    <meta property="article:tag" content="Esp-Idf">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="How to Setup ESP-IDF on FreeBSD 14">
+  <meta name="twitter:description" content="A guide on how to setup ESP-IDF on FreeBSD 14">
+<script src="http://localhost:1313/js/feather.min.js"></script>
+	
+	
+        <link href="http://localhost:1313/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.5cebd7d4fb2b97856af8d32a6def16164fcf7d844e98e236fcb3559655020373.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
+	
+
+	
+	
+
+	
+	
+
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://localhost:1313/">stevenferrer.github.io</a>
+	</div>
+	<nav>
+		
+		<a href="/">home</a>
+		
+		<a href="/posts">all posts</a>
+		
+		<a href="/tags">tags</a>
+		
+		<a href="/about">about</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">How to Setup ESP-IDF on FreeBSD 14</h1>
+			<div class="meta">Posted on Dec 5, 2024</div>
+		</div>
+		
+
+		
+
+		<section class="body">
+			<h2 id="contents">Contents</h2>
+<ul>
+<li>Introduction</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>In this guide, I&rsquo;m going to walk thru the steps on how to setup ESP-IDF on FreeBSD 14.</p>
+<h2 id="step-by-step-guide">Step by step guide</h2>
+<h2 id="install-dependencies-for-freebsd">Install dependencies for FreeBSD</h2>
+<p>Install the standard build tools.</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pkg install <span style="color:#719e07">[</span>dep list<span style="color:#719e07">]</span>
+</span></span></code></pre></div><p>The next step is to follow the official FreeBSD guide for <a href="https://docs.freebsd.org/en/books/handbook/linuxemu/">installing and configuring Linux binary compatibility</a>.
+Below are the required steps.</p>
+<ol>
+<li><a href="https://docs.freebsd.org/en/books/handbook/linuxemu/">Configure Linux Binary Compatibility</a></li>
+<li><a href="https://docs.freebsd.org/en/books/handbook/linuxemu/#linuxemu-rockylinux">Install Rocky Linux Base System</a></li>
+</ol>
+<p>After installing Linux Binary Compatibility, we are going to install Linux libraries needed for ESP-IDF.</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pkg install <span style="color:#719e07">[</span>linux libs<span style="color:#719e07">]</span>
+</span></span></code></pre></div><h2 id="clone-esp-idf-as-usual">Clone ESP-IDF as usual</h2>
+<p>Follow the official ESP-IDF guide for cloning.</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mkdir -p ~/esp
+</span></span><span style="display:flex;"><span><span style="color:#b58900">cd</span> ~/esp
+</span></span><span style="display:flex;"><span>git clone -b v5.3.2 --recursive https://github.com/espressif/esp-idf.git
+</span></span></code></pre></div><h2 id="fixing-the-issue-with-cryptography-package">Fixing the issue with <code>cryptography</code> package</h2>
+<p>If you have tried running the install script for ESP-IDF, you would have encountered the issue with <code>cryptography</code> package.</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#b58900">cd</span> ~/esp/esp-idf
+</span></span><span style="display:flex;"><span>./install.sh esp32
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// show error with cryptography
+</span></span></code></pre></div><p>To fix this, we will edit the <code>~/.espressif/espidf.constraints.v5.3.txt</code> file to remove the <code>--only-binary cryptography</code> constraint. I&rsquo;m not sure about the implications of doing this, but it works so <code>¯\_(ツ)_/¯</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span># cryptography: Min. version was set to support all functionality of ESP-IDF
+</span></span><span style="display:flex;"><span># Only binary for cryptography is here to make it work on ARMv7 architecture
+</span></span><span style="display:flex;"><span># We do have cryptography binary on https://dl.espressif.com/pypi for ARM
+</span></span><span style="display:flex;"><span># On https://pypi.org/ are no ARM binaries as standard now
+</span></span><span style="display:flex;"><span>cryptography&gt;=2.1.4,&lt;43
+</span></span><span style="display:flex;"><span>--only-binary cryptography
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>After removing the constraint, run the ESP-IDF install script and everything should install correctly.</p>
+<h2 id="adding-user-to-operator-group">Adding user to <code>operator</code> group</h2>
+<p>In order to access the serial port, we need to add the current user to the <code>operator</code> group.</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>usermod -aG operator &lt;username&gt;
+</span></span></code></pre></div><h2 id="build-and-flash-test">Build and flash test</h2>
+<p>To test the installation, you can build the official <code>hello_world</code> example and flash it to your ESP device.</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cp -r ~/esp/esp-idf/examples/get-started/hello_world .
+</span></span><span style="display:flex;"><span><span style="color:#b58900">cd</span> hello_world
+</span></span><span style="display:flex;"><span>idf.py build
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>idf.py flash monitor
+</span></span></code></pre></div><h2 id="bonus-development-environment-setup-with-vscode-and-clangd">Bonus: Development environment setup with vscode and clangd</h2>
+<h2 id="conclusion">Conclusion</h2>
+<ul>
+<li>Cloning ESP-IDF v5.3.1</li>
+<li>Installing required linux compat libraries</li>
+<li>Updating requirements.txt to fix cryptography issue</li>
+<li>Adding user to operator group</li>
+<li>Giving it a test</li>
+</ul>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/freebsd">freebsd</a></li>
+					
+					<li><a href="/tags/esp">esp</a></li>
+					
+					<li><a href="/tags/esp-idf">esp-idf</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		</article>
+</main>
+<footer>
+  <div style="display:flex"><a class="soc" href="https://github.com/stevenferrer" rel="me" title="Github"><i data-feather="github"></i></a>
+    <a class="border"></a><a class="soc" href="https://www.linkedin.com/in/stevenferrer" rel="me" title="Linkedin"><i data-feather="linkedin"></i></a>
+    <a class="border"></a></div>
+  <div class="footer-info">
+    2024  © Copyright Steven Ferrer |  <a
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+  </div>
+</footer>
+<script>
+  feather.replace()
+</script></div>
+    </body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Esp-Idf on stevenferrer.github.io</title>
+    <link>http://localhost:1313/tags/esp-idf/</link>
+    <description>Recent content in Esp-Idf on stevenferrer.github.io</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright>© Copyright Steven Ferrer</copyright>
+    <lastBuildDate>Thu, 05 Dec 2024 15:04:30 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/esp-idf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to Setup ESP-IDF on FreeBSD 14</title>
+      <link>http://localhost:1313/posts/how-to-setup-esp-idf-on-freebsd-14/</link>
+      <pubDate>Thu, 05 Dec 2024 15:04:30 +0800</pubDate>
+      <guid>http://localhost:1313/posts/how-to-setup-esp-idf-on-freebsd-14/</guid>
+      <description>&lt;h2 id=&#34;contents&#34;&gt;Contents&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Introduction&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;In this guide, I&amp;rsquo;m going to walk thru the steps on how to setup ESP-IDF on FreeBSD 14.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

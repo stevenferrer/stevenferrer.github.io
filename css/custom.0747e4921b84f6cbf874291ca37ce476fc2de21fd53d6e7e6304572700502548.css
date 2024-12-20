@@ -1,0 +1,9 @@
+.mytable1  {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.mytable1 tr:nth-child(3) {
+    width: 70%;
+}
+

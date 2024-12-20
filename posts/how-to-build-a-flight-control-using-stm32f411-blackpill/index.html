@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html><head lang="en">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>How to build a flight control using STM32F411 a.k.a BlackPill - stevenferrer.github.io</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Building a quadcopter flight control using STM32F411 BlackPill board" />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="https://stevenferrer.github.io/posts/how-to-build-a-flight-control-using-stm32f411-blackpill/">
+  <meta property="og:site_name" content="stevenferrer.github.io">
+  <meta property="og:title" content="How to build a flight control using STM32F411 a.k.a BlackPill">
+  <meta property="og:description" content="Building a quadcopter flight control using STM32F411 BlackPill board">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-12-20T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-12-20T00:00:00+00:00">
+    <meta property="article:tag" content="Stm32">
+    <meta property="article:tag" content="Stm32f411">
+    <meta property="article:tag" content="Inav">
+    <meta property="article:tag" content="Fpv">
+    <meta property="article:tag" content="Quadcopter">
+    <meta property="article:tag" content="Drone">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="How to build a flight control using STM32F411 a.k.a BlackPill">
+  <meta name="twitter:description" content="Building a quadcopter flight control using STM32F411 BlackPill board">
+<script src="https://stevenferrer.github.io/js/feather.min.js"></script>
+	
+	
+        <link href="https://stevenferrer.github.io/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://stevenferrer.github.io/css/main.5cebd7d4fb2b97856af8d32a6def16164fcf7d844e98e236fcb3559655020373.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://stevenferrer.github.io/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
+	
+
+	
+	
+
+	
+	
+
+	
+		
+		
+		<link rel="stylesheet" type="text/css" href="https://stevenferrer.github.io/css/custom.6676fbbfabb51623d39a54b5425acea0b92fb8e18272505883356a1f43d3a7af.css">
+		
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://stevenferrer.github.io/">stevenferrer.github.io</a>
+	</div>
+	<nav>
+		
+		<a href="/">home</a>
+		
+		<a href="/posts">all posts</a>
+		
+		<a href="/tags">tags</a>
+		
+		<a href="/about">about</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="https://stevenferrer.github.io/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">How to build a flight control using STM32F411 a.k.a BlackPill</h1>
+			<div class="meta">Posted on Dec 20, 2024</div>
+		</div>
+		
+
+		
+		<div class="toc">
+		<strong>Table of contents:</strong>
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#flight-control-fc-hardware">Flight control (FC) hardware</a></li>
+    <li><a href="#quadcopter-hardware">Quadcopter hardware</a>
+      <ul>
+        <li><a href="#f450-drone-kit">F450 drone kit</a></li>
+        <li><a href="#powering-the-fc-and-the-receiver">Powering the FC and the receiver</a></li>
+        <li><a href="#motor-rotation">Motor rotation</a></li>
+        <li><a href="#putting-it-together">Putting it together</a></li>
+      </ul>
+    </li>
+    <li><a href="#inav-firmware">INAV firmware</a></li>
+    <li><a href="#inav-configuration">INAV configuration</a></li>
+    <li><a href="#test-flight">Test flight</a></li>
+    <li><a href="#tips-and-recommendations">Tips and recommendations</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+    <li><a href="#related-posts-and-links">Related posts and links</a></li>
+  </ul>
+</nav>
+		</div>
+
+		<section class="body">
+			<h2 id="introduction">Introduction</h2>
+<figure><img src="/images/fullquad.png"
+    alt="full quad" width="100%">
+</figure>
+
+<p>In this post, we are going to see how to build a flight control for a quadcopter using an <a href="https://stm32-base.org/boards/STM32F411CEU6-WeAct-Black-Pill-V2.0">STM32F411 BlackPill</a> board.
+I will only go over the high-level details and assume that you can follow the schematics and solder/assemble the components together.
+It&rsquo;s also useful to have a multimeter with you to test the connections from time to time and make sure there are no short-circuit.
+With that out of the way, let&rsquo;s get into it!</p>
+<h2 id="flight-control-fc-hardware">Flight control (FC) hardware</h2>
+<p>The table below contains the list of components needed for the flight control.</p>
+<table class="mytable1">
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>Description</th>
+          <th>Image</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>STM32F411 BlackPill board</td>
+          <td>The main component of the flight control.</td>
+          <td><figure><img src="/images/blackpill.png"
+    alt="blackpill">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>MPU9250 or MPU6500</td>
+          <td>Gyro/Accelerometer module. I recommended MPU9250 over MPU6500 as it has built-in compass.</td>
+          <td><figure><img src="/images/mpu9250.png"
+    alt="MPU9250">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>MS5611 module (optional)</td>
+          <td>Barometer module</td>
+          <td><figure><img src="/images/ms5611.png"
+    alt="MS5611">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>u-blox NEO-6M GPS module (recommended)</td>
+          <td>GPS module</td>
+          <td><figure><img src="/images/ublox-neo6m.png"
+    alt="u-Blox NEO-6M">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>Prototyping PCB (5x7 cm)</td>
+          <td>PCB to act as a base for our FC. Use the size that better fits your frame.</td>
+          <td><figure><img src="/images/proto-pcb.png"
+    alt="proto pcb">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>Wires</td>
+          <td>I used 22awg for all my connections</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>The <a href="https://github.com/rizacelik/STM32F411CEU6_INAV_Firmware?tab=readme-ov-file#for-inav-61-and-newer-versions-new-wire-connection">schematics and wire connections</a> are provided by <a href="https://github.com/rizacelik">Rıza Çelik</a> (many thanks!).
+I didn&rsquo;t add GPS and compass to my build to keep it simple.
+Still, I recommended you add a GPS to your build as it will help to keep your quad stable when you fly it, you&rsquo;ll see later why 😆</p>
+<p>After soldering the components together, the FC should look similar to below.</p>
+<figure><img src="/images/quad-fc.png"
+    alt="quad fc" width="80%">
+</figure>
+
+<h2 id="quadcopter-hardware">Quadcopter hardware</h2>
+<p>The table below contains the list of components for the quadcopter on my build.
+Do your research and make sure the components are compatible with your build before buying.</p>
+<table class="mytable1">
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>Description</th>
+          <th>Image</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>APEX 5 FPV carbon fiber frame</td>
+          <td>FPV style quadcopter frame.</td>
+          <td><figure><img src="/images/apex5-frame.png"
+    alt="apex 5 fpv frame">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>RS2205 2300KV BLDC motor, 4pcs</td>
+          <td>I used this motor because it fits the APEX 5 frame, use whichever motor fits your frame.</td>
+          <td><figure><img src="/images/rs2205-2300kv-bldc.png"
+    alt="rs2205 2300KV bldc">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>Propellers, 4pcs</td>
+          <td>I used a 5 inch propeller. Use the propeller that fits your motor.</td>
+          <td><figure><img src="/images/propellers.png"
+    alt="propellers">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>Prop guards, 4pcs (optional)</td>
+          <td>Propeller guards are optional but can help protect your props from damage.</td>
+          <td><figure><img src="/images/prop-guards.png"
+    alt="propellers">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>FVT LittleBee BLHeli-S 30A ESC, 4pcs</td>
+          <td>I used individual ESCs, but I&rsquo;d go with the 4-in-1 if I&rsquo;d do it again. A brand called SpeedyBee provides quality 4-in-1 ESC.</td>
+          <td><figure><img src="/images/fvt-littlebee-30a-esc.png"
+    alt="fvt littlebee esc">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>Matek Mini Power Hub (optional)</td>
+          <td>I had to use a power distribution board (PDB) to power all 4 ESC, the FC and the receiver. You might not need it if you&rsquo;re using 4-in-1 ESC.</td>
+          <td><figure><img src="/images/matek-mini-pdb.png"
+    alt="matek mini powerhub">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>Sunpadow 1300mah 4S 120C lipo battery</td>
+          <td>Use any 4S lipo with similar discharge rate.</td>
+          <td><figure><img src="/images/sunpadow-4s-lipo.png"
+    alt="sunpadow lipo battery">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>Fli14+ receiver</td>
+          <td>Use any receiver compatible to your radio transmitter. An alternative would be FlySky ia6b.</td>
+          <td><figure><img src="/images/fli14plus.png"
+    alt="fli14&#43; receiver">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>FlySky i6x transmitter</td>
+          <td>I used FlySky i6x because it&rsquo;s relatively cheap and popular amongst enthusiasts.</td>
+          <td><figure><img src="/images/flysky-i6x.png"
+    alt="flysky i6x">
+</figure>
+</td>
+      </tr>
+      <tr>
+          <td>Wires and connector</td>
+          <td>I used 16awg and XT60 connector to connect the battery to the PDB.</td>
+          <td><figure><img src="/images/xt60.png"
+    alt="xt60 connector">
+</figure>
+</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="f450-drone-kit">F450 drone kit</h3>
+<p>An alternative is a kit called F450 drone kit. It includes the frame, BLDC motors, ESCs, propellers, etc.
+You can buy it from almost any online store.
+Remember that we&rsquo;re making the FC so you can exclude that from the kit if you&rsquo;re planning on buying this kit.</p>
+<figure><img src="/images/f450-kit.png"
+    alt="f450 kit" width="80%">
+</figure>
+
+<h3 id="powering-the-fc-and-the-receiver">Powering the FC and the receiver</h3>
+<p>The FC and the receiver will need 5V so we will connect it to the 5V terminal of the PDB.
+Again, follow the schematics and connections to connect the receiver to the FC.</p>
+<h3 id="motor-rotation">Motor rotation</h3>
+<p>The motors have specific rotation for each arm: clockwise (CW) and counter clock-wise (CCW).
+I follow the traditional rotation shown below.</p>
+<figure><img src="/images/quad-rotation.png"
+    alt="quad rotation" width="80%">
+</figure>
+
+<h3 id="putting-it-together">Putting it together</h3>
+<p>Below is the quad after putting all the components together along with the FC.</p>
+<figure><img src="/images/quad.png"
+    alt="quad fc" width="80%">
+</figure>
+
+<h2 id="inav-firmware">INAV firmware</h2>
+<p>We use a <a href="https://github.com/rizacelik/STM32F411CEU6_INAV_Firmware">custom INAV 7 build for STM32F411</a> provided by <a href="https://www.youtube.com/@rizacelik">Rıza Çelik</a>.
+Follow the instructions from the repo to download the firmware build.
+You also need to download the <a href="https://github.com/iNavFlight/inav-configurator">INAV Configurator</a> to flash the firmware to your BlackPill.</p>
+<p>Below is a guide from Riza on how to flash INAV firmware into your board.
+It is required to connect at least a gyroscope/accelerometer to your board before you can connect to INAV configurator.</p>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/HbSUMauSkiw?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+    </div>
+
+<h2 id="inav-configuration">INAV configuration</h2>
+<p>Once INAV firmware is flashed into your FC, you need to at least configure the receiver and aux modes.
+Below is a comprehensive guide on how to setup INAV on your FC from <a href="https://www.youtube.com/@JoshuaBardwell">Joshua Bardwell</a>. You can watch the whole video or skip to the <a href="https://youtu.be/xdf3yhlgJyc?t=622&amp;si=vRn5auql6ffEjQyw">receiver</a> and <a href="https://youtu.be/xdf3yhlgJyc?t=689&amp;si=Rjb4-LOS5rcPo5Xi">aux mode</a> setup.</p>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/xdf3yhlgJyc?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+    </div>
+
+<p>If you haven&rsquo;t bind the receiver to your transmitter, you can follow the guide below.</p>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/xRmlNQ3M3zE?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+    </div>
+
+<h2 id="test-flight">Test flight</h2>
+<p>Finally, we do a test flight. Make sure to calibrate your gyroscope/accelerometer from INAV configurator or else the quad will not arm.</p>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/vS3MmClxexk?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+    </div>
+
+<p>As you can see, the quad can fly and it&rsquo;s relatively stable but my drone piloting skills (or lack of 😆) definitely needs some improvement.
+Without a GPS and compass, you can&rsquo;t do a position hold, so it&rsquo;s more difficult to control. Now you know why.</p>
+<h2 id="tips-and-recommendations">Tips and recommendations</h2>
+<ul>
+<li>Research the components and make sure it&rsquo;s compatible with your build before buying</li>
+<li>Test the components before you solder them together to make sure it works</li>
+<li>Check the connections and make sure there are no short-circuit</li>
+<li>Practice on a simulator before doing any serious test flight!</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Nowadays, you can easily buy a flight control online, slap it into your quad, and boom, you&rsquo;re done.
+Heck, you can even buy a fully-built quad. So, why even bother?</p>
+<p>I had a quad a while back called <a href="http://www.mjxrc.net/goodshow/bugs-5w.html">MJX Bugs 5W</a> and I was quite happy with it. Except, it felt like a blackbox.
+I was curious and wanted to know how it works. That curiosity sat at the back of my mind for a while until&hellip;</p>
+<p>I did an exploration on embedded systems last year and even took a course on Udemy.
+I purchased a couple of development boards while working on the course and one of them is an STM32F411 a.k.a. BlackPill board.
+That curiousity about drones came back to me when I found that
+I can use this board to make a flight control.
+Which is why I decided to work on this project.</p>
+<p>It was a lot of work but looking back, I&rsquo;ll conclude that all the effort that I put into this project is more than worth it because I learned a lot while working on it.
+That&rsquo;s all, thanks for reading! I hope you found this post useful, cheers!</p>
+<p>Now, I&rsquo;m getting curious how to make custom PCB for a flight control 😉 stay tuned!</p>
+<p>P.S. I added some articles from <a href="https://oscarliang.com/">oscarliang.com</a> related to FPV quad, check them out if you want to learn more.</p>
+<h2 id="related-posts-and-links">Related posts and links</h2>
+<ul>
+<li><a href="https://stm32-base.org/boards/STM32F411CEU6-WeAct-Black-Pill-V2.0">STM32F411 BlackPill board</a></li>
+<li><a href="https://github.com/rizacelik/STM32F411CEU6_INAV_Firmware?tab=readme-ov-file#for-inav-61-and-newer-versions-new-wire-connection">Schematics and connections</a></li>
+<li><a href="https://github.com/rizacelik/STM32F411CEU6_INAV_Firmware">Custom INAV firmware for STM32F411</a></li>
+<li><a href="https://github.com/iNavFlight/inav">INAV firmware</a></li>
+<li><a href="https://oscarliang.com/flysky-tx-rx-buyers-guide/">FlySky Transmitter &amp; Receiver Buyer’s Guide</a></li>
+<li><a href="https://oscarliang.com/lipo-battery-guide/">Using LiPo Batteries for FPV Drones</a></li>
+<li><a href="https://oscarliang.com/best-5-inch-fpv-drone-parts/">The Best 5-inch FPV Drones and Parts</a></li>
+<li><a href="https://oscarliang.com/esc/">Understanding ESCs for FPV Drones</a></li>
+<li><a href="https://oscarliang.com/propellers/">How to Choose the Best Propellers for Your FPV Drone</a></li>
+<li><a href="https://oscarliang.com/reversed-motor-prop-rotation-quadcopter/">Props In vs. Props Out in FPV Drones</a></li>
+</ul>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/stm32">stm32</a></li>
+					
+					<li><a href="/tags/stm32f411">stm32f411</a></li>
+					
+					<li><a href="/tags/inav">inav</a></li>
+					
+					<li><a href="/tags/fpv">fpv</a></li>
+					
+					<li><a href="/tags/quadcopter">quadcopter</a></li>
+					
+					<li><a href="/tags/drone">drone</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		</article>
+</main>
+<footer>
+  <div style="display:flex"><a class="soc" href="https://github.com/stevenferrer" rel="me" title="Github"><i data-feather="github"></i></a>
+    <a class="border"></a><a class="soc" href="https://www.linkedin.com/in/stevenferrer" rel="me" title="Linkedin"><i data-feather="linkedin"></i></a>
+    <a class="border"></a></div>
+  <div class="footer-info">
+    2024  © Steven Ferrer |  <a
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+  </div>
+</footer>
+
+
+<script>
+  feather.replace()
+</script></div>
+    </body>
+</html>

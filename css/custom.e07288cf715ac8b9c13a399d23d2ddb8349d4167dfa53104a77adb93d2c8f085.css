@@ -1,0 +1,20 @@
+.mytable1  {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.mytable1 tr:nth-child(1) {
+    width: 10%;
+}
+
+.mytable1 tr:nth-child(2) {
+    width: 10%;
+}
+
+.mytable1 tr:nth-child(3) {
+    width: 50%;
+}
+
+.mytable1 tr image{
+    /* width: 100%; */
+}

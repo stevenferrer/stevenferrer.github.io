@@ -6,9 +6,51 @@
     <description>Recent content in Tags on stevenferrer.github.io</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <copyright>© Copyright Steven Ferrer</copyright>
-    <lastBuildDate>Wed, 10 Feb 2021 02:12:31 +0000</lastBuildDate>
+    <copyright>© Steven Ferrer</copyright>
+    <lastBuildDate>Fri, 20 Dec 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://stevenferrer.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Drone</title>
+      <link>https://stevenferrer.github.io/tags/drone/</link>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://stevenferrer.github.io/tags/drone/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fpv</title>
+      <link>https://stevenferrer.github.io/tags/fpv/</link>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://stevenferrer.github.io/tags/fpv/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Inav</title>
+      <link>https://stevenferrer.github.io/tags/inav/</link>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://stevenferrer.github.io/tags/inav/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Quadcopter</title>
+      <link>https://stevenferrer.github.io/tags/quadcopter/</link>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://stevenferrer.github.io/tags/quadcopter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Stm32</title>
+      <link>https://stevenferrer.github.io/tags/stm32/</link>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://stevenferrer.github.io/tags/stm32/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Stm32f411</title>
+      <link>https://stevenferrer.github.io/tags/stm32f411/</link>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://stevenferrer.github.io/tags/stm32f411/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Go</title>
       <link>https://stevenferrer.github.io/tags/go/</link>

@@ -1,0 +1,12 @@
+.toc {
+    border-bottom: 10em;
+}
+
+.mytable1  {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.mytable1 img {
+    border: none;
+}

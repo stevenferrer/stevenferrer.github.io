@@ -6,9 +6,16 @@
     <description>Recent content in Posts on stevenferrer.github.io</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <copyright>© Copyright Steven Ferrer</copyright>
-    <lastBuildDate>Wed, 10 Feb 2021 02:12:31 +0000</lastBuildDate>
+    <copyright>© Steven Ferrer</copyright>
+    <lastBuildDate>Fri, 20 Dec 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://stevenferrer.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to build a flight control using STM32F411 a.k.a BlackPill</title>
+      <link>https://stevenferrer.github.io/posts/how-to-build-a-flight-control-using-stm32f411-blackpill/</link>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://stevenferrer.github.io/posts/how-to-build-a-flight-control-using-stm32f411-blackpill/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;figure&gt;&lt;img src=&#34;https://stevenferrer.github.io/images/fullquad.png&#34;&#xA;    alt=&#34;full quad&#34; width=&#34;100%&#34;&gt;&#xA;&lt;/figure&gt;&#xA;&#xA;&lt;p&gt;In this post, we are going to see how to build a flight control for a quadcopter using an &lt;a href=&#34;https://stm32-base.org/boards/STM32F411CEU6-WeAct-Black-Pill-V2.0&#34;&gt;STM32F411 BlackPill&lt;/a&gt; board.&#xA;I will only go over the high-level details and assume that you can follow the schematics and solder/assemble the components together.&#xA;It&amp;rsquo;s also useful to have a multimeter with you to test the connections from time to time and make sure there are no short-circuit.&#xA;With that out of the way, let&amp;rsquo;s get into it!&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Solr-Go 0.2 released!</title>
       <link>https://stevenferrer.github.io/posts/solr-go-0.2-released/</link>
