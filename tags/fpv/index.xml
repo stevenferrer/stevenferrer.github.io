@@ -10,7 +10,7 @@
     <lastBuildDate>Fri, 20 Dec 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://stevenferrer.github.io/tags/fpv/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>How to build a flight control using STM32F411 a.k.a BlackPill</title>
+      <title>How to build a flight control using STM32F411 BlackPill board</title>
       <link>https://stevenferrer.github.io/posts/how-to-build-a-flight-control-using-stm32f411-blackpill/</link>
       <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
       <guid>https://stevenferrer.github.io/posts/how-to-build-a-flight-control-using-stm32f411-blackpill/</guid>
