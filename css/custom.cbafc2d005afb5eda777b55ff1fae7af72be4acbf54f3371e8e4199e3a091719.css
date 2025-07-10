@@ -1,0 +1,17 @@
+.mytable1  {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.mytable1 img {
+    border: none;
+}
+
+nav.table-of-contents,
+.post-toc,
+.toc {
+  float: none !important;
+  display: block;
+  width: auto;
+  margin: 1.5rem 0;
+}
