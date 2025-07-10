@@ -20,24 +20,15 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Multi-Select Facet with Solr, Vue and Go">
   <meta name="twitter:description" content="Implementing multi-select facet with Solr, Vue and Go">
-<script src="https://stevenferrer.github.io/js/feather.min.js"></script>
-	
-	
+
         <link href="https://stevenferrer.github.io/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
 	
 
 	
-	<link rel="stylesheet" type="text/css" media="screen" href="https://stevenferrer.github.io/css/main.5cebd7d4fb2b97856af8d32a6def16164fcf7d844e98e236fcb3559655020373.css" />
-		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://stevenferrer.github.io/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
-	
-
-	
-	
-
-	
-	
-
-	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://stevenferrer.github.io/css/main.6a0f23ea50fd34b46fee262a5a68e17d458c51a2bc99ba1ba018065de6b180c3.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://stevenferrer.github.io/css/dark.50b57e12d401420df23965fed157368aba37b76df0ecefd0b1ecd4da664f01a0.css"  disabled /><script defer src="https://cloud.umami.is/script.js" 
+			data-website-id="dcbea3be-4df1-4b85-b896-1dc5dfdc4f82">
+		</script>
 		
 		
 		<link rel="stylesheet" type="text/css" href="https://stevenferrer.github.io/css/custom.6676fbbfabb51623d39a54b5425acea0b92fb8e18272505883356a1f43d3a7af.css">
@@ -58,24 +49,26 @@
 		
 		<a href="/about">about</a>
 		
-		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"><svg class="feather">
+   <use href="/svg/feather-sprite.51cf5647cb1987f769b616558f2620fd9423d72058490231b391bf6aa3744b55.svg#sun" />
+</svg></span>
 		<script src="https://stevenferrer.github.io/js/themetoggle.js"></script>
 		
 	</nav>
 </header>
 
 <main>
-	<article>
-		<div class="title">
-			<h1 class="title">Multi-Select Facet with Solr, Vue and Go</h1>
-			<div class="meta">Posted on Jun 30, 2020</div>
-		</div>
-		
-
-		
-
-		<section class="body">
-			<p><img src="/images/multi-select-facet-amz.png" alt="multi-select facet amz"></p>
+  <article>
+    <div class="post-container">
+      
+      <div class="post-content">
+        <div class="title">
+          <h1 class="title">Multi-Select Facet with Solr, Vue and Go</h1>
+          <div class="meta">Posted on Jun 30, 2020</div>
+        </div>
+        
+        <section class="body">
+          <p><img src="/images/multi-select-facet-amz.png" alt="multi-select facet amz"></p>
 <h2 id="contents">Contents</h2>
 <ul>
 <li><a href="#introduction">Introduction</a></li>
@@ -179,16 +172,16 @@
 </span></span><span style="display:flex;"><span><span style="color:#719e07">...</span>
 </span></span></code></pre></div><h3 id="indexing-the-data">Indexing the data</h3>
 <p>Indexing is pretty straightforward, just open the data file and feed it to <em>Solr</em> and commit. That&rsquo;s it!</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>  <span style="color:#586e75">// open the json containing the data
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  f, err <span style="color:#719e07">:=</span> os.<span style="color:#268bd2">OpenFile</span>(dataPath, os.O_RDWR, <span style="color:#2aa198">0644</span>)
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>  <span style="color:#586e75">// open the json containing the data</span>
+</span></span><span style="display:flex;"><span>  f, err <span style="color:#719e07">:=</span> os.<span style="color:#268bd2">OpenFile</span>(dataPath, os.O_RDWR, <span style="color:#2aa198">0644</span>)
 </span></span><span style="display:flex;"><span>  <span style="color:#719e07">...</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// send the json to solr
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  err = solrClient.<span style="color:#268bd2">Update</span>(ctx, collection, solr.JSON, f)
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// send the json to solr</span>
+</span></span><span style="display:flex;"><span>  err = solrClient.<span style="color:#268bd2">Update</span>(ctx, collection, solr.JSON, f)
 </span></span><span style="display:flex;"><span>  <span style="color:#719e07">...</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// commit 
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  err = solrClient.<span style="color:#268bd2">Commit</span>(ctx, collection)
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// commit </span>
+</span></span><span style="display:flex;"><span>  err = solrClient.<span style="color:#268bd2">Commit</span>(ctx, collection)
 </span></span><span style="display:flex;"><span>  <span style="color:#719e07">...</span>
 </span></span></code></pre></div><p>Now, we should be able to see that we have sucessfully indexed our data. Notice the <code>fq</code> param is set to <code>docType:product</code>. This will filter all the non-product documents.</p>
 <p><img src="/images/products-query-admin-ui.png" alt="smartphones query from admin ui"></p>
@@ -380,31 +373,38 @@
 <li><a href="https://blog.griddynamics.com/implement-autocomplete-search-for-large-e-commerce-catalogs/">How to implement autocomplete search for large-scale e-commerce catalogs</a></li>
 </ul>
 
-		</section>
+        </section>
+        <div class="post-tags">
+          
+          
+          <nav class="nav tags">
+            <ul class="tags">
+              
+              <li><a href="/tags/solr">solr</a></li>
+              
+              <li><a href="/tags/go">go</a></li>
+              
+              <li><a href="/tags/vue">vue</a></li>
+              
+            </ul>
+          </nav>
+          
+          
+        </div>
+      </div>
 
-		<div class="post-tags">
-			
-			
-			<nav class="nav tags">
-				<ul class="tags">
-					
-					<li><a href="/tags/solr">solr</a></li>
-					
-					<li><a href="/tags/go">go</a></li>
-					
-					<li><a href="/tags/vue">vue</a></li>
-					
-				</ul>
-			</nav>
-			
-			
-		</div>
-		</article>
+      
+      
+    </div>
+
+    </article>
 </main>
 <footer>
-  <div style="display:flex"><a class="soc" href="https://github.com/stevenferrer" rel="me" title="Github"><i data-feather="github"></i></a>
-    <a class="border"></a><a class="soc" href="https://www.linkedin.com/in/stevenferrer" rel="me" title="Linkedin"><i data-feather="linkedin"></i></a>
-    <a class="border"></a></div>
+  <div style="display:flex"><a class="soc" href="https://github.com/stevenferrer" rel="me" title="Github"><svg class="feather">
+   <use href="/svg/feather-sprite.51cf5647cb1987f769b616558f2620fd9423d72058490231b391bf6aa3744b55.svg#github" />
+</svg></a><a class="border"></a><a class="soc" href="https://www.linkedin.com/in/stevenferrer" rel="me" title="Linkedin"><svg class="feather">
+   <use href="/svg/feather-sprite.51cf5647cb1987f769b616558f2620fd9423d72058490231b391bf6aa3744b55.svg#linkedin" />
+</svg></a><a class="border"></a></div>
   <div class="footer-info">
     2025  © Steven Ferrer |  <a
       href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
@@ -412,8 +412,7 @@
 </footer>
 
 
-<script>
-  feather.replace()
-</script></div>
+
+</div>
     </body>
 </html>

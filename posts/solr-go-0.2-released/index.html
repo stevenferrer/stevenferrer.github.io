@@ -19,24 +19,15 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Solr-Go 0.2 released!">
   <meta name="twitter:description" content="A new and improved API for interacting with Solr in Go">
-<script src="https://stevenferrer.github.io/js/feather.min.js"></script>
-	
-	
+
         <link href="https://stevenferrer.github.io/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
 	
 
 	
-	<link rel="stylesheet" type="text/css" media="screen" href="https://stevenferrer.github.io/css/main.5cebd7d4fb2b97856af8d32a6def16164fcf7d844e98e236fcb3559655020373.css" />
-		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://stevenferrer.github.io/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
-	
-
-	
-	
-
-	
-	
-
-	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://stevenferrer.github.io/css/main.6a0f23ea50fd34b46fee262a5a68e17d458c51a2bc99ba1ba018065de6b180c3.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://stevenferrer.github.io/css/dark.50b57e12d401420df23965fed157368aba37b76df0ecefd0b1ecd4da664f01a0.css"  disabled /><script defer src="https://cloud.umami.is/script.js" 
+			data-website-id="dcbea3be-4df1-4b85-b896-1dc5dfdc4f82">
+		</script>
 		
 		
 		<link rel="stylesheet" type="text/css" href="https://stevenferrer.github.io/css/custom.6676fbbfabb51623d39a54b5425acea0b92fb8e18272505883356a1f43d3a7af.css">
@@ -57,24 +48,26 @@
 		
 		<a href="/about">about</a>
 		
-		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"><svg class="feather">
+   <use href="/svg/feather-sprite.51cf5647cb1987f769b616558f2620fd9423d72058490231b391bf6aa3744b55.svg#sun" />
+</svg></span>
 		<script src="https://stevenferrer.github.io/js/themetoggle.js"></script>
 		
 	</nav>
 </header>
 
 <main>
-	<article>
-		<div class="title">
-			<h1 class="title">Solr-Go 0.2 released!</h1>
-			<div class="meta">Posted on Feb 10, 2021</div>
-		</div>
-		
-
-		
-
-		<section class="body">
-			<h2 id="contents">Contents</h2>
+  <article>
+    <div class="post-container">
+      
+      <div class="post-content">
+        <div class="title">
+          <h1 class="title">Solr-Go 0.2 released!</h1>
+          <div class="meta">Posted on Feb 10, 2021</div>
+        </div>
+        
+        <section class="body">
+          <h2 id="contents">Contents</h2>
 <ul>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#whats-new">What&rsquo;s new?</a>
@@ -95,19 +88,19 @@
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#719e07">...</span> 
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// Create a client
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>queryClient <span style="color:#719e07">:=</span> solrquery.<span style="color:#268bd2">NewClient</span>(<span style="color:#2aa198">&#34;localhost&#34;</span>, <span style="color:#2aa198">8983</span>)
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// Create a client</span>
+</span></span><span style="display:flex;"><span>queryClient <span style="color:#719e07">:=</span> solrquery.<span style="color:#268bd2">NewClient</span>(<span style="color:#2aa198">&#34;localhost&#34;</span>, <span style="color:#2aa198">8983</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// Build the query manually using map of interfaces
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>query <span style="color:#719e07">:=</span> <span style="color:#268bd2">map</span>[<span style="color:#dc322f">string</span>]<span style="color:#268bd2">interface</span>{}{
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// Build the query manually using map of interfaces</span>
+</span></span><span style="display:flex;"><span>query <span style="color:#719e07">:=</span> <span style="color:#268bd2">map</span>[<span style="color:#dc322f">string</span>]<span style="color:#268bd2">interface</span>{}{
 </span></span><span style="display:flex;"><span>    <span style="color:#2aa198">&#34;query&#34;</span>: <span style="color:#2aa198">&#34;{!lucene df=name v=iPod}&#34;</span>,
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>ctx <span style="color:#719e07">:=</span> context.<span style="color:#268bd2">Background</span>()
 </span></span><span style="display:flex;"><span>collection <span style="color:#719e07">:=</span> <span style="color:#2aa198">&#34;techproducts&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// send the query
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>queryResp, err <span style="color:#719e07">:=</span> queryClient.<span style="color:#268bd2">Query</span>(ctx, collection, query)
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// send the query</span>
+</span></span><span style="display:flex;"><span>queryResp, err <span style="color:#719e07">:=</span> queryClient.<span style="color:#268bd2">Query</span>(ctx, collection, query)
 </span></span><span style="display:flex;"><span><span style="color:#719e07">...</span>
 </span></span></code></pre></div><p>As we can see from the example above, the query is built manually. Building queries manually can be very tedious and error-prone.</p>
 <h2 id="whats-new">What&rsquo;s new?</h2>
@@ -120,17 +113,17 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#719e07">...</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// Create a client
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>baseURL <span style="color:#719e07">:=</span> <span style="color:#2aa198">&#34;http://solr.example.com&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// Create a client</span>
+</span></span><span style="display:flex;"><span>baseURL <span style="color:#719e07">:=</span> <span style="color:#2aa198">&#34;http://solr.example.com&#34;</span>
 </span></span><span style="display:flex;"><span>collection <span style="color:#719e07">:=</span> <span style="color:#2aa198">&#34;techproducts&#34;</span>
 </span></span><span style="display:flex;"><span>ctx <span style="color:#719e07">:=</span> context.<span style="color:#268bd2">Background</span>()
 </span></span><span style="display:flex;"><span>client <span style="color:#719e07">:=</span> solr.<span style="color:#268bd2">NewJSONClient</span>(baseURL)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// Create a query
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>query <span style="color:#719e07">:=</span> solr.<span style="color:#268bd2">NewQuery</span>().
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// Create a query</span>
+</span></span><span style="display:flex;"><span>query <span style="color:#719e07">:=</span> solr.<span style="color:#268bd2">NewQuery</span>().
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">QueryParser</span>(
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// dismax query parser
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        solr.<span style="color:#268bd2">NewDisMaxQueryParser</span>().
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// dismax query parser</span>
+</span></span><span style="display:flex;"><span>        solr.<span style="color:#268bd2">NewDisMaxQueryParser</span>().
 </span></span><span style="display:flex;"><span>            <span style="color:#268bd2">Query</span>(<span style="color:#2aa198">&#34;&#39;solr rocks&#39;&#34;</span>),
 </span></span><span style="display:flex;"><span>    ).
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">Queries</span>(solr.M{
@@ -154,8 +147,8 @@
 </span></span><span style="display:flex;"><span>        },
 </span></span><span style="display:flex;"><span>    }).
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">Facets</span>(
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// facets
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        solr.<span style="color:#268bd2">NewTermsFacet</span>(<span style="color:#2aa198">&#34;categories&#34;</span>).
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// facets</span>
+</span></span><span style="display:flex;"><span>        solr.<span style="color:#268bd2">NewTermsFacet</span>(<span style="color:#2aa198">&#34;categories&#34;</span>).
 </span></span><span style="display:flex;"><span>            <span style="color:#268bd2">Field</span>(<span style="color:#2aa198">&#34;cat&#34;</span>).<span style="color:#268bd2">Limit</span>(<span style="color:#2aa198">10</span>),
 </span></span><span style="display:flex;"><span>        solr.<span style="color:#268bd2">NewQueryFacet</span>(<span style="color:#2aa198">&#34;high_popularity&#34;</span>).
 </span></span><span style="display:flex;"><span>            <span style="color:#268bd2">Query</span>(<span style="color:#2aa198">&#34;popularity:[8 TO 10]&#34;</span>),
@@ -166,8 +159,8 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">Filters</span>(<span style="color:#2aa198">&#34;inStock:true&#34;</span>).
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">Fields</span>(<span style="color:#2aa198">&#34;name&#34;</span>, <span style="color:#2aa198">&#34;price&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// Send the query
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>queryResponse, err <span style="color:#719e07">:=</span> client.<span style="color:#268bd2">Query</span>(ctx, collection, query)
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// Send the query</span>
+</span></span><span style="display:flex;"><span>queryResponse, err <span style="color:#719e07">:=</span> client.<span style="color:#268bd2">Query</span>(ctx, collection, query)
 </span></span><span style="display:flex;"><span><span style="color:#719e07">...</span>
 </span></span></code></pre></div><h3 id="other-changes">Other changes</h3>
 <ul>
@@ -179,29 +172,36 @@
 <h2 id="thanks">Thanks!</h2>
 <p>We hoped that you&rsquo;ll find this project useful as much as we did. As always, any suggestions and ideas on how to improve the project is welcome! Please feel free to <a href="https://github.com/sf9v/solr-go/issues">open an issue</a> or <a href="https://github.com/sf9v/solr-go/pulls">make a pull request</a>.</p>
 
-		</section>
+        </section>
+        <div class="post-tags">
+          
+          
+          <nav class="nav tags">
+            <ul class="tags">
+              
+              <li><a href="/tags/solr">solr</a></li>
+              
+              <li><a href="/tags/go">go</a></li>
+              
+            </ul>
+          </nav>
+          
+          
+        </div>
+      </div>
 
-		<div class="post-tags">
-			
-			
-			<nav class="nav tags">
-				<ul class="tags">
-					
-					<li><a href="/tags/solr">solr</a></li>
-					
-					<li><a href="/tags/go">go</a></li>
-					
-				</ul>
-			</nav>
-			
-			
-		</div>
-		</article>
+      
+      
+    </div>
+
+    </article>
 </main>
 <footer>
-  <div style="display:flex"><a class="soc" href="https://github.com/stevenferrer" rel="me" title="Github"><i data-feather="github"></i></a>
-    <a class="border"></a><a class="soc" href="https://www.linkedin.com/in/stevenferrer" rel="me" title="Linkedin"><i data-feather="linkedin"></i></a>
-    <a class="border"></a></div>
+  <div style="display:flex"><a class="soc" href="https://github.com/stevenferrer" rel="me" title="Github"><svg class="feather">
+   <use href="/svg/feather-sprite.51cf5647cb1987f769b616558f2620fd9423d72058490231b391bf6aa3744b55.svg#github" />
+</svg></a><a class="border"></a><a class="soc" href="https://www.linkedin.com/in/stevenferrer" rel="me" title="Linkedin"><svg class="feather">
+   <use href="/svg/feather-sprite.51cf5647cb1987f769b616558f2620fd9423d72058490231b391bf6aa3744b55.svg#linkedin" />
+</svg></a><a class="border"></a></div>
   <div class="footer-info">
     2025  © Steven Ferrer |  <a
       href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
@@ -209,8 +209,7 @@
 </footer>
 
 
-<script>
-  feather.replace()
-</script></div>
+
+</div>
     </body>
 </html>
