@@ -89,7 +89,7 @@
 </ul>
 <h3 id="changelog">Changelog</h3>
 <ul>
-<li>02/10/2021: Update examples to use the latest version of <a href="https://github.com/sf9v/solr-go">solr-go</a>.</li>
+<li>02/10/2021: Update examples to use the latest version of <a href="https://github.com/stevenferrer/solr-go">solr-go</a>.</li>
 </ul>
 <h2 id="introduction">Introduction</h2>
 <p>A <em>multi-select facet</em> feature give the users the ability to quickly filter the product catalog and help them zero-in on the product that they need. The majority of e-commerces websites support this feature and if you have shopped online before, then you had probably used it before.</p>
@@ -307,7 +307,7 @@
 </span></span></code></pre></div><p>For each bucket, we can see that we have the <code>val</code> which is unique value for the field, <code>count</code> which indicates the number of <code>skus</code> that matched, and the <code>productCount</code> which indicates the number of <em>unique</em> products that matched (i.e. Assume that <code>2 skus</code> matched the query but they both belong to the same parent product, thus <code>productCount</code> is <code>1</code>).</p>
 <h2 id="api-implementation">API implementation</h2>
 <p>Our API will have a <code>/search</code> endpoint which will simplify the querying and processing of results for us. Optionally, we can have a <code>/suggest</code> endpoint for autosuggest feature.</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ curl http://localhost:8081/search?q<span style="color:#719e07">=</span>Apple&amp;<span style="color:#268bd2">colorFamilies</span><span style="color:#719e07">=</span>Black%2CGold&amp;<span style="color:#268bd2">operatingSystems</span><span style="color:#719e07">=</span>iOS
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>curl http://localhost:8081/search?q=Apple&amp;colorFamilies=Black%2CGold&amp;operatingSystems=iOS
 </span></span></code></pre></div><p>Response:</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>  <span style="color:#268bd2">&#34;facets&#34;</span>: [
@@ -365,7 +365,7 @@
 <p><img src="/images/webapp.png" alt="webapp"></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>For beginners like me, implementing a multi-select facet in Solr is very intidimidating task when you don&rsquo;t know where to start. Thankfully, Solr has a very good documentation and there are blogs written that explains how to implement them which guided me in my implementation.</p>
-<p>The complete implementation can be found in <a href="https://github.com/sf9v/multi-select-facet">this repository</a>. If you have any suggestions, you can open an issue in the repository.</p>
+<p>The complete implementation can be found in <a href="https://github.com/stevenferrer/multi-select-facet">this repository</a>. If you have any suggestions, you can open an issue in the repository.</p>
 <h2 id="references">References</h2>
 <ul>
 <li><a href="https://lucene.apache.org/solr/guide/8_5/">Apache Solr Reference Guide</a></li>
